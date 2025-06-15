@@ -1,90 +1,58 @@
-# ThorCommerce
+# DesignSystem
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Architecture decision record (ADR)
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## Be a good fit to t the position "Need to know: Node.Js, React.Js, Typescript and AWS" and the curotec test 
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Goal: the go of this project is to learned  Build a simplified, production-grade checkout system using modern architecture practices and cloud infrastructure using AWS.
 
-## Finish your CI setup
+Goal this App should allowed the user to create custom checkout using third part payments gateways, and integrate it with any e-commerce plataform for this our system need to be agnostic to the plataform of the ecommerce, so multitenant is required.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/k14P2ELZ8l)
+create a design-sytem to be shared between the front-end applications
 
-
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
-
-## Run tasks
-
-To build the library use:
-
-```sh
-npx nx build pkg1
-```
-
-To run any task with Nx use:
-
-```sh
-npx nx <target> <project-name>
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
-
-```
-npx nx release
-```
-
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+Service one
+- Radix UI
+- shared lib
 
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Services
+- Store
+    emum: bigCommerce | commercetools
+- orderService
+    dashborad
+- Analityc Services
+- OrderDashboradService
+- Payment
+- CheckoutService
+- CartService
+    - webhook 
+- Product (interface)
+- Transforms
 
-## Install Nx Console
+- Products search
+    - Algolia Integration interface
+        - need to be fast
+    - webhook
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-## Useful links
+- Fron-end
+ - Design System
+ - onLine-store
 
-Learn more:
+## SOLID principles. 
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🔧 Tech Stack
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+| Layer          | Tools                                                              |
+| -------------- | ------------------------------------------------------------------ |
+| Frontend       | React.js (w/ TypeScript), Redux Toolkit                            |
+| Backend        | Node.js (w/ TypeScript), Express, GraphQL or REST                  |
+| Database       | PostgreSQL (via Sequelize or Prisma)                               |
+| Infrastructure | AWS (Lambda, API Gateway, RDS, S3, Cognito), Terraform (optional)  |
+| DevOps         | GitHub Actions or AWS CodePipeline (CI/CD), ESLint, Prettier, Jest |
+
+
+yarn add -D tailwindcss@3 postcss autoprefixer
+
+npx create-nx-workspace@latest thor-commerce --packageManager=yarn
