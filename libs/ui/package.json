@@ -14,5 +14,9 @@
       "import": "./dist/index.esm.js",
       "default": "./dist/index.esm.js"
     }
+  },
+  "dependencies": {
+    "@radix-ui/react-icons": "^1.3.2",
+    "radix-ui": "^1.4.2"
   }
 }

@@ -1,0 +1,4 @@
+{
+    //saving this file will trigger a reformat of the code
+    "editor.formatOnSave": true,
+}
