@@ -4,6 +4,9 @@ import { BreadcrumbProps } from './types';
 import { FC } from 'react';
 
 const Breadcrumb: FC<BreadcrumbProps> = ({ title, pages }) => {
+  if (!title) {
+    return null;
+  }
   return (
     <div className="overflow-hidden shadow-breadcrumb">
       <div>

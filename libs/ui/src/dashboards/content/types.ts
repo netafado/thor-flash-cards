@@ -1,5 +1,5 @@
 export type BreadCrumbType = {
-  title: string;
+  title?: string;
   pages: string[];
   children: React.ReactNode;
 };

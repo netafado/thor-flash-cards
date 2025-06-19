@@ -5,6 +5,7 @@
   "main": "./dist/index.esm.js",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.esm.d.ts",
+  "sourceRoot": "src",
   "exports": {
     "./package.json": "./package.json",
     "./global.css": "./src/styles/global.css",
@@ -17,6 +18,10 @@
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
+    "clsx": "^2.1.1",
     "radix-ui": "^1.4.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3"
   }
 }

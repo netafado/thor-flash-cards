@@ -1,14 +1,20 @@
-"use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
+'use client';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 
-import type { SidebarContextType } from "./types";
+import type { SidebarContextType } from '../types';
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
   if (!context) {
-    throw new Error("useSidebar must be used within a SidebarProvider");
+    throw new Error('useSidebar must be used within a SidebarProvider');
   }
   return context;
 };
@@ -25,20 +31,20 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const handleResize = () => {
-      //@ts-expect-error asda
-      const mobile = window.innerWidth < 768;
+      const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
+
       if (!mobile) {
+        console.log('false', mobile);
         setIsMobileOpen(false);
       }
     };
     handleResize();
-     //@ts-expect-error asda
-    window.addEventListener("resize", handleResize);
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
-       //@ts-expect-error asda
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [setIsMobile]);
 
@@ -54,11 +60,24 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({
     setOpenSubmenu((prev) => (prev === item ? null : item));
   };
 
+  const variant = useMemo(() => {
+    if (isMobile) {
+      return 'mobile:expanded';
+    }
+
+    if (isHovered) {
+      return 'desktop:expanded';
+    }
+
+    return isExpanded ? 'desktop:expanded' : 'desktop:collapsed';
+  }, [isExpanded, isMobile, isHovered]);
+
   return (
     <SidebarContext.Provider
       value={{
         isExpanded: isMobile ? false : isExpanded,
         isMobileOpen,
+        isMobile,
         isHovered,
         activeItem,
         openSubmenu,
@@ -67,6 +86,7 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({
         setIsHovered,
         setActiveItem,
         toggleSubmenu,
+        variant,
       }}
     >
       {children}
