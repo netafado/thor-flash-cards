@@ -10,18 +10,23 @@ export const Status: FC<Omit<StatusProps, 'type'> & { type?: VariantType }> = ({
   description,
   leftContent,
   type = 'default',
+  icon,
 }) => {
   const Icon = VARIANT_ICONS[type];
   return (
     <div className="status">
-      <div className={`status__icon ${VARIANT_CLASSES[type]}`}>
-        {VARIANT_ICONS[type] ? <Icon /> : <BackpackIcon />}
-      </div>
+      {icon ?? <>{icon}</>}
+      {!icon && VARIANT_ICONS[type] && (
+        <div className={`status__icon ${VARIANT_CLASSES[type]}`}>
+          {icon ? icon : VARIANT_ICONS[type] ? <Icon /> : <BackpackIcon />}
+        </div>
+      )}
+
       <div className="flex-1 ml-3">
         <span className="text-2xl font-bold leading-none text-gray-900 dark:text-white/90">
           {title}
         </span>
-        <h3 className="text-base font-ligth text-gray-500 dark:text-gray-400">
+        <h3 className="font-ligth text-gray-500 dark:text-gray-400">
           {description}
         </h3>
       </div>

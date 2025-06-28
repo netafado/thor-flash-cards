@@ -5,7 +5,7 @@ export type StatusProps = {
    * The status message to display.
    */
   title: string;
-  description?: string;
+  description?: string | React.ReactNode;
 
   /**
    * The type of status, which determines the styling.
@@ -22,4 +22,5 @@ export type StatusProps = {
    * Optional children to render inside the status component.
    */
   leftContent?: React.ReactNode;
+  icon?: React.ReactNode;
 };

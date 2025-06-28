@@ -59,7 +59,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
-              className={`flex w-full gap-3 items-center justify-center menu-item group  ${
+              className={`menu-item group  ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
                   ? 'menu-item-active'
                   : 'menu-item-inactive'
@@ -89,7 +89,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
             nav.path && (
               <Link
                 href={nav.path}
-                className={`flex w-full gap-3 items-center justify-center group ${
+                className={`menu-item flex w-full gap-3 items-center justify-center group ${
                   isActive(nav.path) ? 'menu-item-active' : 'menu-item-inactive'
                 }`}
               >
@@ -121,12 +121,12 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                     : '0px',
               }}
             >
-              <ul className="mt-2 space-y-1 ml-9">
+              <ul className="space-y-1 ml-9">
                 {nav.subItems.map((subItem) => (
                   <li key={subItem.name}>
                     <Link
                       href={subItem.path}
-                      className={`font-light text-gray-500 dark:text-gray-400 menu-item-text text-left flex-1 menu-dropdown-item ${
+                      className={`menu-dropdown-item ${
                         isActive(subItem.path)
                           ? 'menu-dropdown-item-active'
                           : 'menu-dropdown-item-inactive'
