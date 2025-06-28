@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ThemeProvider>
-        <body className="bg-gray-100 dark:bg-black">
+        <body>
           <SidebarProvider>{children}</SidebarProvider>
         </body>
       </ThemeProvider>
