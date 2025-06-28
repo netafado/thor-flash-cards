@@ -11,12 +11,16 @@ module.exports = {
   theme: {
     extend: {},
       colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
+        ...colors,
       error: colors.red,
-      gray: colors.red,
       success: colors.green,
       warning: colors.amber,
+      brand: colors.pink,
+      gray: colors.gray,
+      white: colors.white,
+      black: colors.black,
+      primary: colors.blue,
+      secondary: colors.purple
     }
   },
   plugins: [],
