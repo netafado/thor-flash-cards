@@ -1,4 +1,4 @@
-import { Get, Injectable, Param } from '@nestjs/common';
+import { Injectable, Param } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
 import type { CreateTagDto, CreateTagResponseDto } from './dto/createTagDto';
 @Injectable()
@@ -18,7 +18,6 @@ export class TagsService {
 
   async createTag(tag: CreateTagDto): Promise<CreateTagResponseDto> {
     try {
-      console.log('Creating tag:', tag);
       const tagResult = await this.dataBase.models.Tag.create({
         name: tag.name,
         user_id: tag.userId,

@@ -7,6 +7,7 @@ import {
   Model,
   Table,
   ForeignKey,
+  PrimaryKey,
 } from 'sequelize-typescript';
 import { Deck } from '../decks/decks.entity';
 
@@ -17,6 +18,14 @@ import { Deck } from '../decks/decks.entity';
   updatedAt: 'updated_at',
 })
 export class Card extends Model<CardModel> {
+  @PrimaryKey
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+  })
+  override id!: string;
+
   @ForeignKey(() => Deck)
   @Column({
     type: DataType.UUID,

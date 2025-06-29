@@ -8,6 +8,7 @@ import { Deck } from '../modules/decks/decks.entity';
 import { User } from '../modules/users/infrastructure/user.entity';
 import { Card } from '../modules/cards/cards.entity';
 import { Tag } from '../modules/tags/tag.model';
+import { CardModule } from '../modules/cards/cards.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { Tag } from '../modules/tags/tag.model';
     }),
     DecksModule,
     TagsModule,
+    CardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
