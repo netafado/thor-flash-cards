@@ -1,20 +1,25 @@
-import { Injectable, Param } from '@nestjs/common';
+import { Get, Injectable, Param } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
 import type { CreateTagDto, CreateTagResponseDto } from './dto/createTagDto';
 @Injectable()
 export class TagsService {
   constructor(private dataBase: Sequelize) {}
 
-  getAllTags(@Param('userId') userId: string) {
-    return this.dataBase.models.Tag.findAll({
+  async getAllTags(
+    @Param('userId') userId: string
+  ): Promise<CreateTagResponseDto[]> {
+    const result = await this.dataBase.models.Tag.findAll({
       where: { user_id: userId },
       order: [['created_at', 'DESC']],
     });
+
+    return result.map((tag) => tag.toJSON() as CreateTagResponseDto);
   }
 
   async createTag(tag: CreateTagDto): Promise<CreateTagResponseDto> {
     try {
-      const tagResult = await this.dataBase.models.Tags.create({
+      console.log('Creating tag:', tag);
+      const tagResult = await this.dataBase.models.Tag.create({
         name: tag.name,
         user_id: tag.userId,
       });

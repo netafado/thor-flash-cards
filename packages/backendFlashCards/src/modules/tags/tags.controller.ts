@@ -1,18 +1,27 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TagsService } from './tags.service';
-import { CreateTagResponseDto } from './dto/createTagDto';
+import type { CreateTagResponseDto, CreateTagDto } from './dto/createTagDto';
 @Controller('tags')
 export class TagsController {
   constructor(private readonly tagService: TagsService) {}
-  @Get()
-  findAll(@Param('userId') userId: string) {
-    return this.tagService.getAllTags(userId);
+
+  @Get(':user_id')
+  async findAll(
+    @Param('user_id') userId: string
+  ): Promise<CreateTagResponseDto[]> {
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+    const result = await this.tagService.getAllTags(userId);
+    return result;
   }
 
   @Post()
   async createTag(
-    @Param('tag') tag: { name: string; userId: number }
+    @Body()
+    tag: CreateTagDto
   ): Promise<CreateTagResponseDto> {
+    console.log('createTag:', tag);
     return await this.tagService.createTag(tag);
   }
 }

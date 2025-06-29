@@ -5,7 +5,7 @@ export type CreateTagDto = {
 export type CreateTagResponseDto = {
   id: number;
   name: string;
-  userId: number;
+  user_id: number;
   created_at: Date;
   updated_at: Date;
 };
