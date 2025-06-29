@@ -29,7 +29,9 @@
         ],
         "options": {
           "buildTarget": "@thor-commerce/backendFlashCards:build",
-          "runBuildTargetDependencies": false
+          "runBuildTargetDependencies": false,
+          "inspect": true,
+          "host": "localhost"
         },
         "configurations": {
           "development": {

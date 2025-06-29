@@ -1,11 +1,8 @@
 'use strict';
 
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface,) {
-
-
     await queryInterface.bulkInsert('Cards', [
       {
         id: '6269e37f-d7f4-4ecb-a3ce-d56532cf955f',
