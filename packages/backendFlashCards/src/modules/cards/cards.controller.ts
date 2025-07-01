@@ -1,8 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import type {
-  CreateCardDto,
-  CreateCardResponseDto,
-} from './dto/create-card-dto';
+import { CreateCardDto, CreateCardResponseDto } from './dto/create-card-dto';
 import { CardService } from './cards.service';
 
 @Controller('cards')
@@ -20,16 +17,21 @@ export class CardsController {
     return result;
   }
 
-  @Post(':deck_id')
+  @Post()
   async createCard(
-    @Param('deck_id') deckId: string,
     @Body()
-    card: CreateCardDto
+    createCardDto: //**
+    // Transform payload objects#
+    //Payloads coming in over the network are plain JavaScript objects.
+    // The ValidationPipe can automatically transform payloads to be objects typed according
+    // to their DTO classes. To enable auto-transformation, set transform to true.
+    //  */
+    CreateCardDto
   ): Promise<CreateCardResponseDto> {
     const cardResult = await this.cardService.createCard({
-      ...card,
-      deck_id: card.deckId || deckId,
-      user_id: card.userId,
+      ...createCardDto,
+      deck_id: createCardDto.deckId,
+      user_id: createCardDto.userId,
     });
     return cardResult;
   }

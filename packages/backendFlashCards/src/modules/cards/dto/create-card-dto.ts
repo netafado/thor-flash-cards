@@ -1,21 +1,29 @@
+import { IsString, IsEnum, IsNotEmpty } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 export type Dificulty = 'EASY' | 'MEDIUM' | 'HARD';
 
-export interface CardModel {
-  deck_id: string;
-  front: string;
-  back: string;
-  dificulty: Dificulty;
-  created_at: Date;
-  updated_at: Date;
-}
-export type CreateCardDto = {
+export class CreateCardDto {
+  @IsString()
+  @IsNotEmpty()
   name: string;
+
+  @IsString()
+  @IsNotEmpty()
   deckId: string;
+
+  @IsNotEmpty()
   userId: number;
+
+  @IsString()
   front: string;
+
+  @IsString()
   back: string;
+
+  @IsNotEmpty()
+  @IsEnum(['EASY', 'MEDIUM', 'HARD'])
   dificulty: Dificulty;
-};
+}
 
 export type CreateCardDtoDataBase = {
   name: string;
@@ -36,3 +44,5 @@ export type CreateCardResponseDto = {
   created_at: Date;
   updated_at: Date;
 };
+
+export class UpdateCatDto extends PartialType(CreateCardDto) {}
