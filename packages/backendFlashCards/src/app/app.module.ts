@@ -9,9 +9,22 @@ import { User } from '../modules/users/infrastructure/user.entity';
 import { Card } from '../modules/cards/cards.entity';
 import { Tag } from '../modules/tags/tag.model';
 import { CardModule } from '../modules/cards/cards.module';
+import { CognitoAuthModule } from '@nestjs-cognito/auth';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    CognitoAuthModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        jwtVerifier: {
+          userPoolId: configService.get('COGNITO_USER_POOL_ID') as string,
+          clientId: configService.get('COGNITO_CLIENT_ID'),
+          tokenUse: 'id',
+        },
+      }),
+      inject: [ConfigService],
+    }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
       port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
