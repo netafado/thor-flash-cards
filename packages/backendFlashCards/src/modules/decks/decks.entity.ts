@@ -26,9 +26,8 @@ export class Deck extends Model<DeckModel> {
   })
   override id!: string;
 
-  @ForeignKey(() => User)
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
     allowNull: false,
   })
   user_id: string;

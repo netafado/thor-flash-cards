@@ -1,17 +1,18 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Authentication, CognitoUser } from '@nestjs-cognito/auth';
 import { DecksService } from './decks.service';
 import { DeckModel } from './decks.model';
+import type { CognitoJwtPayload } from '@nestjs-cognito/core';
 
 @Controller('decks')
+@Authentication()
 export class DecksController {
   constructor(private readonly decksService: DecksService) {}
 
-  @Get(':user_id')
   async getDecksByUserId(
-    @Param('user_id') userId: string
+    @CognitoUser('sub') cognitoUser: CognitoJwtPayload
   ): Promise<DeckModel[]> {
-    console.log('Fetching decks for user ID:', userId);
-    const decks = await this.decksService.getDecksByUserId(userId);
+    const decks = await this.decksService.getDecksByUserId(cognitoUser.sub);
     return decks;
   }
 
@@ -23,9 +24,14 @@ export class DecksController {
       background_color: string;
       repetions_days: string;
       title: string;
-    }
+    },
+    @CognitoUser(['groups', 'email', 'username', 'sub'])
+    cognitoUser: CognitoJwtPayload
   ): Promise<DeckModel> {
-    const thisDeck = await this.decksService.createDeck(deckData);
+    const thisDeck = await this.decksService.createDeck({
+      ...deckData,
+      user_id: cognitoUser.sub,
+    });
     return thisDeck;
   }
 }

@@ -11,7 +11,7 @@ import { Tag } from '../modules/tags/tag.model';
 import { CardModule } from '../modules/cards/cards.module';
 import { CognitoAuthModule } from '@nestjs-cognito/auth';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import { AuthModule } from '../modules/auth/auth.module';
 @Module({
   imports: [
     CognitoAuthModule.registerAsync({
@@ -20,6 +20,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         jwtVerifier: {
           userPoolId: configService.get('COGNITO_USER_POOL_ID') as string,
           clientId: configService.get('COGNITO_CLIENT_ID'),
+          // this is possible to use id or access token
+          // if you want to use access token, change tokenUse to 'access'
+          // using id token is recommended for security reasons and you have user information in it
           tokenUse: 'id',
         },
       }),
@@ -36,6 +39,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       logging: (msg: string) => console.log(msg),
       models: [Deck, User, Card, Tag],
     }),
+    AuthModule,
     DecksModule,
     TagsModule,
     CardModule,
