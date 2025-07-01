@@ -11,6 +11,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
+
       deck_id: {
         type: Sequelize.UUID,
         allowNull: false,
@@ -33,6 +34,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+
+      dificulty: {
+        type: Sequelize.ENUM('EASY', 'MEDIUM', 'HARD'),
+        allowNull: false,
+        defaultValue: 'HARD',
+      },
+      
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

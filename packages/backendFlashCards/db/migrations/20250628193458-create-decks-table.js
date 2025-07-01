@@ -11,16 +11,20 @@ module.exports = {
       },
       
       user_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
-        references: {
-          model: 'users', 
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
 
+
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      
+      description: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
 
       background_color: {
         type: Sequelize.STRING,

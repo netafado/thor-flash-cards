@@ -16,14 +16,10 @@ module.exports = {
       },
 
       user_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
       },
+
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -36,12 +32,6 @@ module.exports = {
       },
     });
 
-    // add a composite unique constraint on (name, user_id)
-    await queryInterface.addConstraint('tags', {
-      fields: ['name', 'user_id'],
-      type: 'unique',
-      name: 'unique_tag_per_user', // name for the constraint
-    });
   },
 
   async down (queryInterface) {
