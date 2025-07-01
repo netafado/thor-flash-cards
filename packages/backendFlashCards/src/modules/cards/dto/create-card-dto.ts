@@ -11,9 +11,6 @@ export class CreateCardDto {
   @IsNotEmpty()
   deckId: string;
 
-  @IsNotEmpty()
-  userId: number;
-
   @IsString()
   front: string;
 
@@ -28,7 +25,6 @@ export class CreateCardDto {
 export type CreateCardDtoDataBase = {
   name: string;
   deck_id: string;
-  user_id: number;
   front: string;
   back: string;
   dificulty: Dificulty;

@@ -23,8 +23,8 @@ export class CardService {
     card: CreateCardDtoDataBase
   ): Promise<CreateCardResponseDto> {
     try {
-      const tagResult = await this.dataBase.models.Card.create(card);
-      return tagResult.toJSON() as CreateCardResponseDto;
+      const cardResult = await this.dataBase.models.Card.create(card);
+      return cardResult.toJSON() as CreateCardResponseDto;
     } catch (error) {
       console.error('Error creating card:', error);
       throw new Error('Failed to create tag');

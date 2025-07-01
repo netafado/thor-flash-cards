@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { Authentication, CognitoUser } from '@nestjs-cognito/auth';
 import { DecksService } from './decks.service';
 import { DeckModel } from './decks.model';

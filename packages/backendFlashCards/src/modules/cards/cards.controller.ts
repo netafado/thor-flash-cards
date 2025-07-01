@@ -1,7 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateCardDto, CreateCardResponseDto } from './dto/create-card-dto';
 import { CardService } from './cards.service';
+import { Authentication } from '@nestjs-cognito/auth';
 
+@Authentication()
 @Controller('cards')
 export class CardsController {
   constructor(private readonly cardService: CardService) {}
@@ -10,9 +12,6 @@ export class CardsController {
   async findAll(
     @Param('deck_id') deckId: string
   ): Promise<CreateCardResponseDto[]> {
-    if (!deckId) {
-      throw new Error('User ID is required');
-    }
     const result = await this.cardService.getAllCards(deckId);
     return result;
   }
@@ -31,7 +30,6 @@ export class CardsController {
     const cardResult = await this.cardService.createCard({
       ...createCardDto,
       deck_id: createCardDto.deckId,
-      user_id: createCardDto.userId,
     });
     return cardResult;
   }

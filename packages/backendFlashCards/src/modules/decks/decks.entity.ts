@@ -4,11 +4,9 @@ import {
   HasMany,
   Model,
   Table,
-  ForeignKey,
   PrimaryKey,
 } from 'sequelize-typescript';
 import { DeckModel } from './decks.model';
-import { User } from '../users/infrastructure/user.entity';
 import { Card } from '../cards/cards.entity';
 
 @Table({
