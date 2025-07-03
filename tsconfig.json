@@ -4,9 +4,6 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/store-e2e"
-    },
-    {
       "path": "./apps/store"
     },
     {
@@ -17,9 +14,6 @@
     },
     {
       "path": "./libs/ui"
-    },
-    {
-      "path": "./packages/restfulapi"
     },
     {
       "path": "./packages/backendFlashCards"

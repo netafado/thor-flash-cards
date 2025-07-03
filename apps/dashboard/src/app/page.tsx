@@ -117,6 +117,7 @@ export default function Index() {
                   type="error"
                   title="Apple"
                   icon={
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src="https://placehold.co/40x40?text=Apple"
                       alt="Apple Logo"
