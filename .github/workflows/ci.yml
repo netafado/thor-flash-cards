@@ -38,3 +38,7 @@ jobs:
       # - run: yarn nx-cloud record -- echo Hello World
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
       - run: yarn nx affected -t lint test build
+      
+      # Ensure all checks pass - this step will be used as a required status check
+      - name: All checks passed
+        run: echo "✅ All CI checks have passed successfully!"
