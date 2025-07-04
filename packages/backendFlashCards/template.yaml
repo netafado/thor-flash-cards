@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs20.x
+    MemorySize: 1024
+
+Resources:
+  FlashCardsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main.handler
+      CodeUri: ./dist
+      Environment:
+        Variables:
+          NODE_ENV: development
+          DATABASE_URL: flashcards-db.c6iquaas4jt0.us-east-1.rds.amazonaws.com
+          DB_USERNAME: mydbuser
+          DB_PASSWORD: SuperSecret
+          DB_NAME: flashcardsdb
+          DB_PORT: 5432
+          COGNITO_USER_POOL_ID: us-east-1_SZMEoeVFW
+          COGNITO_CLIENT_ID: 4a6a61dm83q1b3mk8ufn5b8cpt
+          COGNITO_REGION: us-east-1
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY

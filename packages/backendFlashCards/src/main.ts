@@ -1,19 +1,39 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import serverlessExpress from '@codegenie/serverless-express';
+import { Handler } from 'aws-lambda';
+import express from 'express';
+import { APIGatewayProxyEvent, Callback, Context } from 'aws-lambda';
 import { AppModule } from './app/app.module';
-import { HttpExceptionFilter } from './common/error/http-exception';
+
+let cachedServer: Handler;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new HttpExceptionFilter());
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  if (!cachedServer) {
+    const expressApp = express();
+    const nestApp = await NestFactory.create(
+      AppModule,
+      new ExpressAdapter(expressApp)
+    );
+
+    nestApp.enableCors();
+
+    await nestApp.init();
+
+    cachedServer = serverlessExpress({ app: expressApp });
+  }
+
+  return cachedServer;
 }
 
-bootstrap();
+export const handler = async (
+  event: APIGatewayProxyEvent,
+  context: Context,
+  callback: Callback
+) => {
+  const server = await bootstrap();
+
+  return server(event, context, callback);
+};
+
+export default handler;

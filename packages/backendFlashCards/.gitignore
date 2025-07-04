@@ -6,3 +6,4 @@ terraform.tfstate.backup
 terraform.tfvars
 node_modules
 dist
+.aws-sam
