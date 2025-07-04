@@ -15,7 +15,6 @@ variable "project_name" {
   default     = "flashcards"
 }
 
-
 variable "rds_password" {
   description = "The password for the RDS database user"
   type        = string
@@ -40,4 +39,11 @@ variable "vpc_cidr" {
 variable "developer_ip" {
   description = "IP address of the developer for security group rules"
   type        = string
+}
+
+# New Lambda variables
+variable "lambda_zip_file" {
+  description = "Path to the Lambda deployment package"
+  type        = string
+  default     = "flashcards-api.zip"
 }

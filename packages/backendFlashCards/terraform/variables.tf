@@ -46,8 +46,13 @@ variable "vpc_cidr" {
   default = "10.0.0.0/16"
 }
 
-
 variable "developer_ip" {
   description = "IP address of the developer for security group rules"
   type        = string
+}
+
+variable "lambda_zip_file" {
+  description = "Path to the Lambda deployment package"
+  type        = string
+  default     = "../flashcards-api.zip"
 }

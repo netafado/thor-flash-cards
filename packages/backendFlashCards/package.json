@@ -62,6 +62,18 @@
           "command": "sam local start-api -t template.yaml --port 4006"
         }
       },
+      "deploy:lambda": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "cwd": "packages/backendFlashCards",
+          "commands": [
+            "cd dist && yarn && zip -r ../flashcards-api.zip ."
+          ]
+        }
+      },
       "test": {
         "options": {
           "passWithNoTests": true

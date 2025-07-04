@@ -8,4 +8,5 @@ module "aws" {
   rds_db_name = var.rds_db_name
   vpc_cidr = var.vpc_cidr
   developer_ip = var.developer_ip
+  lambda_zip_file = var.lambda_zip_file
 }
