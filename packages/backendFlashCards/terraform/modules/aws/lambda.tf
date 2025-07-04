@@ -52,7 +52,10 @@ resource "aws_iam_policy" "lambda_custom_policy" {
           "cognito-idp:AdminUpdateUserAttributes",
           "cognito-idp:AdminGetUser",
           "cognito-idp:AdminDeleteUser",
-          "cognito-idp:ListUsers"
+          "cognito-idp:ListUsers",
+          "cognito-idp:SignUp",
+          "cognito-idp:ConfirmSignUp",
+          "cognito-idp:ResendConfirmationCode"
         ]
         Resource = aws_cognito_user_pool.flashcards_user_pool.arn
       }
@@ -61,7 +64,6 @@ resource "aws_iam_policy" "lambda_custom_policy" {
 
   tags = local.tags
 }
-
 resource "aws_iam_role_policy_attachment" "lambda_custom_policy" {
   role       = aws_iam_role.lambda_execution_role.name
   policy_arn = aws_iam_policy.lambda_custom_policy.arn
@@ -81,7 +83,7 @@ resource "aws_security_group" "lambda_sg" {
     cidr_blocks = [aws_vpc.main.cidr_block]
   }
 
-  # Allow HTTPS outbound for external API calls
+  # Allow HTTPS outbound for external API calls (including Cognito)
   egress {
     from_port   = 443
     to_port     = 443
@@ -97,6 +99,22 @@ resource "aws_security_group" "lambda_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Allow DNS resolution (TCP)
+  egress {
+    from_port   = 53
+    to_port     = 53
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow DNS resolution (UDP)
+  egress {
+    from_port   = 53
+    to_port     = 53
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = merge(local.tags, {
     Name = "${var.project_name}-lambda-sg"
   })
@@ -109,7 +127,7 @@ resource "aws_lambda_function" "flashcards_api" {
   role            = aws_iam_role.lambda_execution_role.arn
   handler         = "main.handler"
   runtime         = "nodejs20.x"
-  timeout         = 30
+  timeout         = 60  # Increase timeout for Cognito operations
   memory_size     = 1024
 
   # VPC configuration to access RDS
@@ -129,6 +147,11 @@ resource "aws_lambda_function" "flashcards_api" {
       COGNITO_USER_POOL_ID    = aws_cognito_user_pool.flashcards_user_pool.id
       COGNITO_CLIENT_ID       = aws_cognito_user_pool_client.flashcards_app_client.id
       COGNITO_REGION          = var.aws_region
+      # Add these for better AWS SDK performance
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED = "1"
+      AWS_SDK_LOAD_CONFIG = "1"
+      # Add timeout settings
+      AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE = "1"
     }
   }
 
@@ -223,4 +246,93 @@ resource "aws_lambda_permission" "api_gateway_invoke" {
   function_name = aws_lambda_function.flashcards_api.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.flashcards_api.execution_arn}/*/*"
+}
+
+#  VPC Endpoint for Cognito Identity Provider
+# resource "aws_vpc_endpoint" "cognito_idp" {
+#   vpc_id              = aws_vpc.main.id
+#   service_name        = "com.amazonaws.${var.aws_region}.cognito-idp"
+#   vpc_endpoint_type   = "Interface"
+#   subnet_ids          = [aws_subnet.private_a.id, aws_subnet.private_b.id]
+#   security_group_ids  = [aws_security_group.vpc_endpoint_sg.id]
+  
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Principal = "*"
+#         Action = [
+#           "cognito-idp:*"
+#         ]
+#         Resource = "*"
+#       }
+#     ]
+#   })
+
+#   tags = merge(local.tags, {
+#     Name = "${var.project_name}-cognito-idp-endpoint"
+#   })
+# }
+
+# Security group for VPC endpoints
+resource "aws_security_group" "vpc_endpoint_sg" {
+  name        = "${var.project_name}-vpc-endpoint-sg"
+  description = "Security group for VPC endpoints"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lambda_sg.id]
+  }
+
+  tags = merge(local.tags, {
+    Name = "${var.project_name}-vpc-endpoint-sg"
+  })
+}
+
+#  Create NAT Gateway for Lambda internet access
+resource "aws_eip" "nat_gateway" {
+  domain = "vpc"
+  
+  tags = merge(local.tags, {
+    Name = "${var.project_name}-nat-gateway-eip"
+  })
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat_gateway.id
+  subnet_id     = aws_subnet.public_a.id
+
+  tags = merge(local.tags, {
+    Name = "${var.project_name}-nat-gateway"
+  })
+
+  depends_on = [aws_internet_gateway.main]
+}
+
+# Update private route table to use NAT Gateway
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.main.id
+  }
+
+  tags = merge(local.tags, {
+    Name = "${var.project_name}-private-rt"
+  })
+}
+
+resource "aws_route_table_association" "private_a" {
+  subnet_id      = aws_subnet.private_a.id
+  route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "private_b" {
+  subnet_id      = aws_subnet.private_b.id
+  route_table_id = aws_route_table.private.id
 }

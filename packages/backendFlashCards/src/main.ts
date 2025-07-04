@@ -10,10 +10,14 @@ let cachedServer: Handler;
 
 async function bootstrap() {
   if (!cachedServer) {
+    console.log('Bootstrapping NestJS application...');
     const expressApp = express();
     const nestApp = await NestFactory.create(
       AppModule,
-      new ExpressAdapter(expressApp)
+      new ExpressAdapter(expressApp),
+      {
+        logger: ['error', 'warn', 'log'],
+      }
     );
 
     nestApp.enableCors();

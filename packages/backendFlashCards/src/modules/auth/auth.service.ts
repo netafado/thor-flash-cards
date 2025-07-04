@@ -21,6 +21,7 @@ export class AuthService {
   }
 
   async signUp(email: string, password: string) {
+    console.log('Signing up user:', email);
     try {
       const command = new SignUpCommand({
         ClientId: this.configService.get('COGNITO_CLIENT_ID'),
@@ -38,12 +39,16 @@ export class AuthService {
       return result;
     } catch (error) {
       console.error('Error during sign up:', error);
-      throw new Error('Sign up failed. Please try again later.');
+      return {
+        error: 'Sign up failed. Please try again later.',
+        statusCode: 401,
+      };
     }
   }
 
   async signIn(email: string, password: string) {
     try {
+      console.log('signIn up user:', email);
       const command = new AdminInitiateAuthCommand({
         UserPoolId: this.configService.get('COGNITO_USER_POOL_ID'),
         ClientId: this.configService.get('COGNITO_CLIENT_ID'),
@@ -58,9 +63,10 @@ export class AuthService {
       return result;
     } catch (error) {
       console.error('Error during sign in:', error);
-      throw new Error(
-        'Sign in failed. Please check your credentials and try again.'
-      );
+      return {
+        error: 'Sign in failed. Please check your credentials and try again.',
+        statusCode: 401,
+      };
     }
   }
 

@@ -16,13 +16,13 @@ Resources:
       Environment:
         Variables:
           NODE_ENV: development
-          DATABASE_URL: flashcards-db.c6iquaas4jt0.us-east-1.rds.amazonaws.com
-          DB_USERNAME: mydbuser
-          DB_PASSWORD: SuperSecret
-          DB_NAME: flashcardsdb
+          DATABASE_URL: ${env:DB_URL}
+          DB_USERNAME: ${env:DB_USERNAME}
+          DB_PASSWORD: ${env:DB_PASSWORD}
+          DB_NAME:
           DB_PORT: 5432
-          COGNITO_USER_POOL_ID: us-east-1_SZMEoeVFW
-          COGNITO_CLIENT_ID: 4a6a61dm83q1b3mk8ufn5b8cpt
+          COGNITO_USER_POOL_ID: ${aws_cognito_user_pool_id}
+          COGNITO_CLIENT_ID: ${aws_cognito_client_id}
           COGNITO_REGION: us-east-1
       Events:
         ApiEvent:
