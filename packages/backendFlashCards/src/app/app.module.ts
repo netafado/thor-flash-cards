@@ -36,6 +36,12 @@ import { AuthModule } from '../modules/auth/auth.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: false,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
       logging: (msg: string) => console.log(msg),
       models: [Deck, User, Card, Tag],
     }),

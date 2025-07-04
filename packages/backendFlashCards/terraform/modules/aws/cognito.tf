@@ -1,9 +1,9 @@
-provider "aws" {
-  region = "us-east-1" # change to your desired region
-}
+# File: packages/backendFlashCards/terraform/modules/aws/cognito.tf
+# This file contains the AWS Cognito User Pool and User Pool Client configuration for the Flashcards
+# application. It sets up the user pool with password policies, auto-verification of email
 
 resource "aws_cognito_user_pool" "flashcards_user_pool" {
-  name = "my-app-user-pool"
+  name = var.project_name
 
   tags = local.tags
 
@@ -27,12 +27,15 @@ resource "aws_cognito_user_pool" "flashcards_user_pool" {
   }
 }
 
+# This user pool client is used to interact with the Cognito User Pool.
 resource "aws_cognito_user_pool_client" "flashcards_app_client" {
   name         = var.project_name
   user_pool_id = aws_cognito_user_pool.flashcards_user_pool.id
 
   generate_secret = false
 
+  # Enable explicit authentication flows
+  # This allows the client to use the authentication flows specified below
   explicit_auth_flows = [
     "ALLOW_USER_PASSWORD_AUTH",
     "ALLOW_ADMIN_USER_PASSWORD_AUTH",
@@ -40,6 +43,8 @@ resource "aws_cognito_user_pool_client" "flashcards_app_client" {
     "ALLOW_USER_SRP_AUTH",
   ]
 
+  # OAuth 2.0 settings
+  # Adjust the callback and logout URLs to match your application's URLs
   callback_urls = [
     "http://localhost:3000/callback" # adjust to your app's URL
   ]
@@ -48,6 +53,8 @@ resource "aws_cognito_user_pool_client" "flashcards_app_client" {
     "http://localhost:3000/logout"
   ]
 
+  # OAuth 2.0 settings
+  # These settings are necessary for the client to support OAuth 2.0 flows
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = ["email", "openid", "profile"]
@@ -56,7 +63,3 @@ resource "aws_cognito_user_pool_client" "flashcards_app_client" {
   prevent_user_existence_errors = "ENABLED"
 }
 
-resource "aws_cognito_user_pool_domain" "flashcards_user_pool_domain" {
-  domain       = "my-app-user-pool-domain-12345" # must be globally unique
-  user_pool_id = aws_cognito_user_pool.flashcards_user_pool.id
-}

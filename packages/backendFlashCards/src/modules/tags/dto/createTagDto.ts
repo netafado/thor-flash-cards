@@ -1,6 +1,6 @@
 export type CreateTagDto = {
   name: string;
-  userId: number;
+  userId: string;
 };
 export type CreateTagResponseDto = {
   id: number;
