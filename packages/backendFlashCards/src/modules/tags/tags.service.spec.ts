@@ -19,6 +19,7 @@ describe('TagsService', () => {
         {
           provide: Sequelize,
           useValue: {
+            addModels: jest.fn(),
             models: {
               Tag: {
                 findAll: jest.fn().mockResolvedValue([]),

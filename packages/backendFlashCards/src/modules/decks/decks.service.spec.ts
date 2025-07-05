@@ -12,6 +12,7 @@ describe('DecksService', () => {
         {
           provide: Sequelize,
           useValue: {
+            addModels: jest.fn(),
             models: {
               Decks: {
                 findAll: jest.fn().mockResolvedValue([]),

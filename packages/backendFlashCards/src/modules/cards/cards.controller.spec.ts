@@ -1,9 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CardsController } from './cards.controller';
-
 import { CardService } from './cards.service';
-import { CreateCardDto } from './dto/create-card-dto';
-import { CreateCardResponseDto } from './dto/create-card-dto';
+import { CreateCardResponseDto, CreateCardDto } from './dto/create-card-dto';
 
 // Mock the Authentication decorator
 jest.mock('@nestjs-cognito/auth', () => ({
