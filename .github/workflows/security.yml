@@ -1,9 +1,5 @@
 name: Security & Quality Checks
 
-env:
-  NX_BASE: main # Base branch for affected commands
-  NX_NO_CLOUD: true # Disable Nx Cloud for this workflow
-
 on:
   pull_request:
     branches:
@@ -32,7 +28,7 @@ jobs:
 
       # Code quality checks
       - name: TypeScript type checking
-        run: yarn nx affected -t typecheck
+        run: yarn nx affected -t typecheck --base=origin/main --parallel --maxParallel=4
 
       - name: Security checks passed
         run: echo "✅ All security and quality checks passed!"
