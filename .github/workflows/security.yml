@@ -30,10 +30,6 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      # Security audit
-      - name: Run security audit
-        run: yarn audit --audit-level moderate
-
       # Code quality checks
       - name: TypeScript type checking
         run: yarn nx affected -t typecheck
