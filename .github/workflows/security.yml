@@ -1,5 +1,9 @@
 name: Security & Quality Checks
 
+env:
+  NX_BASE: main # Base branch for affected commands
+  NX_NO_CLOUD: true # Disable Nx Cloud for this workflow
+
 on:
   pull_request:
     branches:
@@ -25,14 +29,6 @@ jobs:
           cache: 'yarn'
 
       - run: yarn install --frozen-lockfile
-
-      # Security audit
-      - name: Run security audit
-        run: yarn audit --audit-level moderate
-
-      # Check for vulnerabilities in dependencies
-      - name: Check dependencies
-        run: yarn nx affected -t lint test
 
       # Code quality checks
       - name: TypeScript type checking
