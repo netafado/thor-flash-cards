@@ -11,31 +11,49 @@ import {
   MixIcon,
 } from '@radix-ui/react-icons';
 
-import './styles.css';
 import clsx from 'clsx';
-
 import { AppSidebarProps, NavItem } from './types';
 
+const appSidebarClasses = {
+  base: 'fixed flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 lg:translate-x-0',
+  expanded: 'w-[290px]',
+  collapsed: 'w-[90px] mt-0',
+  translateXFull: 'translate-x-0',
+  translateXNone: '-translate-x-full',
+  naveIcons: 'w-[20px] h-[20px]',
+  menuItem:
+    'hover:bg-brand-500/20 p-2 transition-all duration-300 ease-in-out rounded-md flex items-center gap-2 cursor-pointer relative flex w-full gap-3',
+  menuItemCaret: 'text-gray-500 dark:text-gray-400',
+  menuDropdownItem:
+    'flex-1 block font-light text-gray-500 dark:text-gray-400 rounded-md text-left w-full hover:bg-brand-500/20 p-1 pl-2 transition-all',
+  menuItemActive:
+    'bg-brand-500/20 text-brand-500 dark:text-brand-400 dark:bg-brand-500/20',
+  menuItemInactive: 'text-gray-500 dark:text-gray-400',
+  menuItemIcon: 'font-semibold text-gray-500 dark:text-gray-400',
+  menuItemIconActive: 'font-semibold text-brand-500 dark:text-brand-400',
+  menuItemIconInactive: 'font-semibold text-gray-500 dark:text-gray-400',
+  menuItemText: 'flex-1 text-left',
+};
 const navItems: NavItem[] = [
   {
-    icon: <BarChartIcon className="nav-icon" />,
+    icon: <BarChartIcon className={appSidebarClasses.naveIcons} />,
     name: 'Checkout',
     subItems: [{ name: 'Payment gateways', path: '/payment-gateway' }],
   },
   {
-    icon: <MixIcon className="nav-icon" />,
+    icon: <MixIcon className={appSidebarClasses.naveIcons} />,
     name: 'Dashboard',
     subItems: [{ name: 'Ecommerce', path: '/payment-gateway' }],
   },
 
   {
-    icon: <AccessibilityIcon className="nav-icon" />,
+    icon: <AccessibilityIcon className={appSidebarClasses.naveIcons} />,
     name: 'User Profile',
     path: '/profile',
   },
   {
     name: 'Tables',
-    icon: <AccessibilityIcon className="nav-icon" />,
+    icon: <AccessibilityIcon className={appSidebarClasses.naveIcons} />,
     subItems: [{ name: 'Basic Tables', path: '/basic-tables' }],
   },
 ];
@@ -59,10 +77,10 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
-              className={`menu-item group  ${
+              className={`${appSidebarClasses.menuItem} group  ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
-                  ? 'menu-item-active'
-                  : 'menu-item-inactive'
+                  ? appSidebarClasses.menuItemActive
+                  : appSidebarClasses.menuItemInactive
               } cursor-pointer ${
                 !isExpanded && !isHovered
                   ? 'lg:justify-center'
@@ -70,34 +88,42 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
               }`}
             >
               <span
-                className={`menu-item__icon ${
+                className={`${appSidebarClasses.menuItemIcon} ${
                   openSubmenu?.type === menuType && openSubmenu?.index === index
-                    ? 'menu-item__icon--active'
-                    : 'menu-item__icon--inactive'
+                    ? appSidebarClasses.menuItemIconActive
+                    : appSidebarClasses.menuItemIconInactive
                 }`}
               >
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className="menu-item__text">{nav.name}</span>
+                <span className={appSidebarClasses.menuItemText}>
+                  {nav.name}
+                </span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <CaretDownIcon className="menu-item__icon-caret inline justify-self-end" />
+                <CaretDownIcon
+                  className={`${appSidebarClasses.menuItemCaret} inline justify-self-end`}
+                />
               )}
             </button>
           ) : (
             nav.path && (
               <Link
                 href={nav.path}
-                className={`menu-item flex w-full gap-3 items-center justify-center group ${
-                  isActive(nav.path) ? 'menu-item-active' : 'menu-item-inactive'
+                className={`${
+                  appSidebarClasses.menuDropdownItem
+                } flex w-full gap-3 items-center  ${
+                  isActive(nav.path)
+                    ? appSidebarClasses.menuItemActive
+                    : appSidebarClasses.menuItemInactive
                 }`}
               >
                 <span
-                  className={`menu-item__icon ${
+                  className={` ${
                     isActive(nav.path)
-                      ? 'menu-item-icon-active'
-                      : 'menu-item-icon-inactive'
+                      ? `${appSidebarClasses.menuItemIcon} ${appSidebarClasses.menuItemIconActive}`
+                      : `${appSidebarClasses.menuItemIcon} ${appSidebarClasses.menuItemIconInactive}`
                   }`}
                 >
                   {nav.icon}
@@ -126,10 +152,10 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                   <li key={subItem.name}>
                     <Link
                       href={subItem.path}
-                      className={`menu-dropdown-item ${
+                      className={`${appSidebarClasses.menuDropdownItem} ${
                         isActive(subItem.path)
-                          ? 'menu-dropdown-item-active'
-                          : 'menu-dropdown-item-inactive'
+                          ? appSidebarClasses.menuItemActive
+                          : appSidebarClasses.menuItemInactive
                       }`}
                     >
                       {subItem.name}
@@ -186,7 +212,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 
   return (
     <aside
-      className={clsx('app-sidebar', {
+      className={clsx(appSidebarClasses.base, {
         'w-[290px]': isExpanded || isHovered || isMobileOpen,
         'w-[90px] mt-0': !isExpanded && !isHovered && !isMobileOpen,
         'translate-x-0': isMobileOpen,
