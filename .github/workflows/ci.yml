@@ -1,17 +1,20 @@
 name: CI
+env:
+  NX_BASE: main # Base branch for affected commands
+  NX_NO_CLOUD: true # Disable Nx Cloud for this workflow
 
 on:
   push:
     branches:
       - main
   pull_request:
+env:
+  NX_BASE: main # Base branch for affected commands
 
 permissions:
   actions: read
   contents: read
-env:
-  NX_BASE: main # Base branch for affected commands
-  NX_BRANCH: ${{ github.head_ref || github.ref_name }} # Branch for affected commands
+
 jobs:
   main:
     runs-on: ubuntu-latest
