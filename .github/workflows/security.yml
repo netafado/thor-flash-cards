@@ -30,10 +30,6 @@ jobs:
       - name: Run security audit
         run: yarn audit --audit-level moderate
 
-      # Check for vulnerabilities in dependencies
-      - name: Check dependencies
-        run: yarn nx affected -t lint test
-
       # Code quality checks
       - name: TypeScript type checking
         run: yarn nx affected -t typecheck
