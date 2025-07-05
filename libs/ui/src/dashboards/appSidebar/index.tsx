@@ -120,10 +120,10 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                 }`}
               >
                 <span
-                  className={` ${
+                  className={`${appSidebarClasses.menuItemIcon} ${
                     isActive(nav.path)
-                      ? `${appSidebarClasses.menuItemIcon} ${appSidebarClasses.menuItemIconActive}`
-                      : `${appSidebarClasses.menuItemIcon} ${appSidebarClasses.menuItemIconInactive}`
+                      ? appSidebarClasses.menuItemIconActive
+                      : appSidebarClasses.menuItemIconInactive
                   }`}
                 >
                   {nav.icon}
