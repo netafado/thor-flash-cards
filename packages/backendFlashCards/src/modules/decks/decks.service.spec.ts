@@ -13,7 +13,7 @@ describe('DecksService', () => {
           provide: Sequelize,
           useValue: {
             models: {
-              Tag: {
+              Decks: {
                 findAll: jest.fn().mockResolvedValue([]),
                 create: jest.fn().mockResolvedValue({ toJSON: () => ({}) }),
               },
