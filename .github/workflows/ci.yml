@@ -8,6 +8,10 @@ on:
     branches: [main, develop]
     paths: ['packages/backendFlashCards/**']
 
+env:
+  NX_BASE: main # Base branch for affected commands
+  NX_NO_CLOUD: true # Disable Nx Cloud for this workflow
+
 jobs:
   test:
     runs-on: ubuntu-latest
