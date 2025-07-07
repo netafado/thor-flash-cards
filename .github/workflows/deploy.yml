@@ -43,11 +43,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Verify AWS credentials
-        run: |
-          aws sts get-caller-identity
-          aws lambda list-functions --max-items 1
-
       - name: Update Lambda function
         run: |
           cd packages/backendFlashCards
