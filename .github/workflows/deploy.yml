@@ -37,11 +37,16 @@ jobs:
           zip -r flashcards-api.zip dist/ node_modules/ package.json
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Verify AWS credentials
+        run: |
+          aws sts get-caller-identity
+          aws lambda list-functions --max-items 1
 
       - name: Update Lambda function
         run: |
@@ -52,3 +57,7 @@ jobs:
 
           aws lambda wait function-updated \
             --function-name flashcards-api
+
+      - name: Verify deployment
+        run: |
+          aws lambda get-function --function-name flashcards-api --query 'Configuration.LastModified'
