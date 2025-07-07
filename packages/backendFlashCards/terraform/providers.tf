@@ -7,8 +7,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "earn-terraform-state-bucket"
-    key    = "dev/backendFlashCards/terraform.tfstate"
+    bucket = "flashcardsproject"
+    key    = "backendFlashCards/dev/terraform.tfstate"
     region = "us-east-1"
   }
 

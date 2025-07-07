@@ -248,33 +248,6 @@ resource "aws_lambda_permission" "api_gateway_invoke" {
   source_arn    = "${aws_apigatewayv2_api.flashcards_api.execution_arn}/*/*"
 }
 
-#  VPC Endpoint for Cognito Identity Provider
-# resource "aws_vpc_endpoint" "cognito_idp" {
-#   vpc_id              = aws_vpc.main.id
-#   service_name        = "com.amazonaws.${var.aws_region}.cognito-idp"
-#   vpc_endpoint_type   = "Interface"
-#   subnet_ids          = [aws_subnet.private_a.id, aws_subnet.private_b.id]
-#   security_group_ids  = [aws_security_group.vpc_endpoint_sg.id]
-  
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Effect = "Allow"
-#         Principal = "*"
-#         Action = [
-#           "cognito-idp:*"
-#         ]
-#         Resource = "*"
-#       }
-#     ]
-#   })
-
-#   tags = merge(local.tags, {
-#     Name = "${var.project_name}-cognito-idp-endpoint"
-#   })
-# }
-
 # Security group for VPC endpoints
 resource "aws_security_group" "vpc_endpoint_sg" {
   name        = "${var.project_name}-vpc-endpoint-sg"
