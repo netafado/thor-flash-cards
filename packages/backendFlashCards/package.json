@@ -47,7 +47,7 @@
         "executor": "nx:run-commands",
         "options": {
           "cwd": "packages/backendFlashCards",
-          "command": "cd dist && yarn && cd .. && sam build"
+          "command": "cd dist && yarn"
         },
         "dependsOn": [
           "build"
