@@ -74,6 +74,13 @@
           ]
         }
       },
+      "db:migrate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/backendFlashCards",
+          "command": "npx sequelize-cli db:migrate"
+        }
+      },
       "test": {
         "options": {
           "passWithNoTests": true
