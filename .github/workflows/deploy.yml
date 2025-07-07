@@ -56,3 +56,21 @@ jobs:
       - name: Verify deployment
         run: |
           aws lambda get-function --function-name flashcards-api --query 'Configuration.LastModified'
+
+      - name: Run database migrations
+        run: |
+          echo "🔄 Running database migrations..."
+
+          # Set environment variables
+          export NODE_ENV=production
+          export DB_HOST=${{ secrets.DB_HOST }}
+          export DB_PORT=${{ secrets.DB_PORT || '5432' }}
+          export DB_NAME=${{ secrets.DB_NAME }}
+          export DB_USERNAME=${{ secrets.DB_USERNAME }}
+          export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          export DB_SSL=true
+
+          # Run migrations using Nx
+          yarn nx run @thor-commerce/backendFlashCards:db:migrate
+
+          echo "✅ Database migrations completed"
