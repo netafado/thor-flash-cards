@@ -6,6 +6,10 @@ on:
     types: [completed]
     branches: [main]
 
+env:
+  NX_BASE: main # Base branch for affected commands
+  NX_NO_CLOUD: true # Disable Nx Cloud for this workflow
+
 jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
