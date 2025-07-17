@@ -3,3 +3,4 @@ export * from './backDrop';
 export * from './appHeader';
 export * from '../providers';
 export * from './content';
+export * from './layout';

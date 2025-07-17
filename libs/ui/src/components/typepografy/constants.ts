@@ -14,4 +14,4 @@ export const TYPEPOGRAFY_CLASSES = {
 };
 
 export const BASIC_TYPEPOGRAFY_CLASSES = 'text-gray-500 dark:text-gray-500';
-export const HEADING_CLASSES = 'font-bold text-gray-800  dark:text-gray-100';
+export const HEADING_CLASSES = 'font-bold text-gray-800 dark:text-gray-100';

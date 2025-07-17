@@ -4,12 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import {
-  AccessibilityIcon,
-  CaretDownIcon,
-  BarChartIcon,
-  MixIcon,
-} from '@radix-ui/react-icons';
+import { ListBulletIcon, CaretDownIcon, MixIcon } from '@radix-ui/react-icons';
 
 import clsx from 'clsx';
 import { AppSidebarProps, NavItem } from './types';
@@ -36,25 +31,14 @@ const appSidebarClasses = {
 };
 const navItems: NavItem[] = [
   {
-    icon: <BarChartIcon className={appSidebarClasses.naveIcons} />,
-    name: 'Checkout',
-    subItems: [{ name: 'Payment gateways', path: '/payment-gateway' }],
+    icon: <ListBulletIcon className={appSidebarClasses.naveIcons} />,
+    name: 'Decks',
+    subItems: [{ name: 'Start learning', path: '/payment-gateway' }],
   },
   {
     icon: <MixIcon className={appSidebarClasses.naveIcons} />,
     name: 'Dashboard',
     subItems: [{ name: 'Ecommerce', path: '/payment-gateway' }],
-  },
-
-  {
-    icon: <AccessibilityIcon className={appSidebarClasses.naveIcons} />,
-    name: 'User Profile',
-    path: '/profile',
-  },
-  {
-    name: 'Tables',
-    icon: <AccessibilityIcon className={appSidebarClasses.naveIcons} />,
-    subItems: [{ name: 'Basic Tables', path: '/basic-tables' }],
   },
 ];
 
@@ -227,31 +211,12 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
         }`}
       >
         <Link href="/">
-          {isExpanded || isHovered || isMobileOpen ? (
-            <>
-              <Image
-                className="dark:hidden"
-                src="images/user/logo/auth-logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <Image
-                className="hidden dark:block"
-                src="images/user/logo/auth-logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-            </>
-          ) : (
-            <Image
-              src="images/user/logo/logo-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
-          )}
+          <Image
+            src="/images/logo/logo.svg"
+            alt="Logo"
+            width={32}
+            height={32}
+          />
         </Link>
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">

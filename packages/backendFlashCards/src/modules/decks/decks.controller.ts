@@ -13,6 +13,10 @@ export class DecksController {
   async getDecksByUserId(
     @CognitoUser('sub') cognitoUser: string
   ): Promise<DeckModel[]> {
+    // Runtime O(n) complexity: O(n)
+    // where n is the number of decks for the user
+    // if can be optimized by using a database query with a filter
+    // and make it O(1) complexity
     const decks = await this.decksService.getDecksByUserId(cognitoUser);
     return decks;
   }
