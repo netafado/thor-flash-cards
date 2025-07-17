@@ -7,15 +7,19 @@ interface EditorProps {
 }
 
 export const Editor = ({ markdown, onChange }: EditorProps) => {
-  return <MDEditor value={markdown} {...{ onChange }} />;
+  return (
+    <div data-color-mode="dark" className="mt-2">
+      <MDEditor value={markdown} {...{ onChange }} />
+    </div>
+  );
 };
 
 export const EditorView = ({ markdown }: { markdown: string }) => {
   return (
     <MDEditor.Markdown
+      className="text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 border-none"
       source={markdown}
       style={{ whiteSpace: 'pre-wrap' }}
-      className="prose dark:prose-invert"
     />
   );
 };
