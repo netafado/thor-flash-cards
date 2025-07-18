@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { ButtonHTMLAttributes, FC } from 'react';
 import clx from 'clsx';
 
 const SIZES = {
@@ -7,21 +7,42 @@ const SIZES = {
   lg: 'h-10 px-5 text-lg',
 };
 
-export const Button: FC<{
+const BTN_COLORS = {
+  primary: 'bg-brand-600 text-white hover:bg-brand-700',
+  secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
+  danger: 'bg-red-600 text-white hover:bg-red-700',
+  brand: 'bg-brand-600 text-white hover:bg-green-700',
+};
+
+const BASE_CLASSES =
+  'inline-flex items-center justify-center rounded-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200';
+
+type ButtonColors = 'primary' | 'secondary' | 'danger' | 'brand';
+type ButtonSizes = 'sm' | 'md' | 'lg';
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   icon?: React.ReactNode;
   onClick?: () => void;
+  colors?: ButtonColors;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
-}> = ({ children, onClick, className, icon, size = 'md' }) => {
+  size?: ButtonSizes;
+};
+
+export const Button: FC<ButtonProps> = ({
+  children,
+  onClick,
+  className,
+  icon,
+  size = 'md',
+  colors = 'primary',
+  ...rest
+}) => {
   return (
     <button
       onClick={onClick}
-      className={clx(
-        'inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white py-2 font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200',
-        SIZES[size],
-        className
-      )}
+      className={clx(BASE_CLASSES, SIZES[size], BTN_COLORS[colors], className)}
+      {...rest}
     >
       {icon && <span className="inline-flex items-center">{icon}</span>}
       {children}

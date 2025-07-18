@@ -15,7 +15,7 @@ module.exports = {
       error: colors.red,
       success: colors.green,
       warning: colors.amber,
-      brand: colors.pink,
+      brand: colors.lime,
       gray: colors.gray,
       white: colors.white,
       black: colors.black,

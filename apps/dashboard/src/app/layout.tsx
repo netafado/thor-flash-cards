@@ -16,13 +16,13 @@ export default function RootLayout({
   const messages = useMessages();
   return (
     <html lang="en">
-      <ThemeProvider>
-        <NextIntlClientProvider locale="en" messages={messages}>
-          <body>
+      <body>
+        <ThemeProvider>
+          <NextIntlClientProvider locale="en" messages={messages}>
             <SidebarProvider>{children}</SidebarProvider>
-          </body>
-        </NextIntlClientProvider>
-      </ThemeProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

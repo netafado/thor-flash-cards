@@ -59,7 +59,7 @@
         "defaultConfiguration": "development",
         "options": {
            "cwd": "packages/backendFlashCards",
-          "command": "sam local start-api -t template.yaml --port 4006"
+          "command": "sam local start-api -t template.yaml --port 4004"
         }
       },
       "deploy:lambda": {

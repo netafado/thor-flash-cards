@@ -4,17 +4,22 @@ export const metadata = {
 };
 
 import { DashboardLayout, SidebarProvider } from '@thor-commerce/ui';
+import Providers from '../../providers/AuthProvider';
 
 import '@thor-commerce/ui/global.css';
+import { getServerSession } from 'next-auth';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
   return (
-    <SidebarProvider>
-      <DashboardLayout>{children}</DashboardLayout>
-    </SidebarProvider>
+    <Providers session={session}>
+      <SidebarProvider>
+        <DashboardLayout>{children}</DashboardLayout>
+      </SidebarProvider>
+    </Providers>
   );
 }
