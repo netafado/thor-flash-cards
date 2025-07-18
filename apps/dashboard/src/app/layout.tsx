@@ -4,6 +4,7 @@ export const metadata = {
 };
 
 import { SidebarProvider, ThemeProvider } from '@thor-commerce/ui';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
 
 import '@thor-commerce/ui/global.css';
 
@@ -12,12 +13,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const messages = useMessages();
   return (
     <html lang="en">
       <ThemeProvider>
-        <body>
-          <SidebarProvider>{children}</SidebarProvider>
-        </body>
+        <NextIntlClientProvider locale="en" messages={messages}>
+          <body>
+            <SidebarProvider>{children}</SidebarProvider>
+          </body>
+        </NextIntlClientProvider>
       </ThemeProvider>
     </html>
   );
