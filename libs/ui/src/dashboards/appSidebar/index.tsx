@@ -4,43 +4,10 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ListBulletIcon, CaretDownIcon, MixIcon } from '@radix-ui/react-icons';
-
+import RenderMenuItems from './components/MenuHandler';
 import clsx from 'clsx';
-import { AppSidebarProps, NavItem } from './types';
-
-const appSidebarClasses = {
-  base: 'fixed flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 lg:translate-x-0',
-  expanded: 'w-[290px]',
-  collapsed: 'w-[90px] mt-0',
-  translateXFull: 'translate-x-0',
-  translateXNone: '-translate-x-full',
-  naveIcons: 'w-[20px] h-[20px]',
-  menuItem:
-    'hover:bg-brand-500/20 p-2 transition-all duration-300 ease-in-out rounded-md flex items-center gap-2 cursor-pointer relative flex w-full gap-3',
-  menuItemCaret: 'text-gray-500 dark:text-gray-400',
-  menuDropdownItem:
-    'flex-1 block font-light text-gray-500 dark:text-gray-400 rounded-md text-left w-full hover:bg-brand-500/20 p-1 pl-2 transition-all',
-  menuItemActive:
-    'bg-brand-500/20 text-brand-500 dark:text-brand-400 dark:bg-brand-500/20',
-  menuItemInactive: 'text-gray-500 dark:text-gray-400',
-  menuItemIcon: 'font-semibold text-gray-500 dark:text-gray-400',
-  menuItemIconActive: 'font-semibold text-brand-500 dark:text-brand-400',
-  menuItemIconInactive: 'font-semibold text-gray-500 dark:text-gray-400',
-  menuItemText: 'flex-1 text-left',
-};
-const navItems: NavItem[] = [
-  {
-    icon: <ListBulletIcon className={appSidebarClasses.naveIcons} />,
-    name: 'Decks',
-    subItems: [{ name: 'Start learning', path: '/payment-gateway' }],
-  },
-  {
-    icon: <MixIcon className={appSidebarClasses.naveIcons} />,
-    name: 'Dashboard',
-    subItems: [{ name: 'Ecommerce', path: '/payment-gateway' }],
-  },
-];
+import { AppSidebarProps } from './types';
+import { APP_SIDEBAR_CLASSES, MAIN_NAV_ITEMS } from './contants';
 
 export const AppSidebar: React.FC<AppSidebarProps> = ({
   isExpanded,
@@ -51,109 +18,6 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 }) => {
   const pathname = usePathname();
 
-  const renderMenuItems = (
-    navItems: NavItem[],
-    menuType: 'main' | 'others'
-  ) => (
-    <ul className="flex flex-col gap-4">
-      {navItems.map((nav, index) => (
-        <li key={nav.name}>
-          {nav.subItems ? (
-            <button
-              onClick={() => handleSubmenuToggle(index, menuType)}
-              className={`${appSidebarClasses.menuItem} group  ${
-                openSubmenu?.type === menuType && openSubmenu?.index === index
-                  ? appSidebarClasses.menuItemActive
-                  : appSidebarClasses.menuItemInactive
-              } cursor-pointer ${
-                !isExpanded && !isHovered
-                  ? 'lg:justify-center'
-                  : 'lg:justify-start'
-              }`}
-            >
-              <span
-                className={`${appSidebarClasses.menuItemIcon} ${
-                  openSubmenu?.type === menuType && openSubmenu?.index === index
-                    ? appSidebarClasses.menuItemIconActive
-                    : appSidebarClasses.menuItemIconInactive
-                }`}
-              >
-                {nav.icon}
-              </span>
-              {(isExpanded || isHovered || isMobileOpen) && (
-                <span className={appSidebarClasses.menuItemText}>
-                  {nav.name}
-                </span>
-              )}
-              {(isExpanded || isHovered || isMobileOpen) && (
-                <CaretDownIcon
-                  className={`${appSidebarClasses.menuItemCaret} inline justify-self-end`}
-                />
-              )}
-            </button>
-          ) : (
-            nav.path && (
-              <Link
-                href={nav.path}
-                className={`${
-                  appSidebarClasses.menuDropdownItem
-                } flex w-full gap-3 items-center  ${
-                  isActive(nav.path)
-                    ? appSidebarClasses.menuItemActive
-                    : appSidebarClasses.menuItemInactive
-                }`}
-              >
-                <span
-                  className={`${appSidebarClasses.menuItemIcon} ${
-                    isActive(nav.path)
-                      ? appSidebarClasses.menuItemIconActive
-                      : appSidebarClasses.menuItemIconInactive
-                  }`}
-                >
-                  {nav.icon}
-                </span>
-                {(isExpanded || isHovered || isMobileOpen) && (
-                  <span className="menu-item__text">{nav.name}</span>
-                )}
-              </Link>
-            )
-          )}
-          {nav.subItems && (isExpanded || isHovered || isMobileOpen) && (
-            <div
-              ref={(el) => {
-                subMenuRefs.current[`${menuType}-${index}`] = el;
-              }}
-              className="overflow-hidden transition-all duration-300"
-              style={{
-                height:
-                  openSubmenu?.type === menuType && openSubmenu?.index === index
-                    ? `${subMenuHeight[`${menuType}-${index}`]}px`
-                    : '0px',
-              }}
-            >
-              <ul className="space-y-1 ml-9">
-                {nav.subItems.map((subItem) => (
-                  <li key={subItem.name}>
-                    <Link
-                      href={subItem.path}
-                      className={`${appSidebarClasses.menuDropdownItem} ${
-                        isActive(subItem.path)
-                          ? appSidebarClasses.menuItemActive
-                          : appSidebarClasses.menuItemInactive
-                      }`}
-                    >
-                      {subItem.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </li>
-      ))}
-    </ul>
-  );
-
   const [openSubmenu, setOpenSubmenu] = useState<{
     type: 'main' | 'others';
     index: number;
@@ -162,12 +26,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
     {}
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
-
-  // const isActive = (path: string) => path === pathname;
   const isActive = useCallback((path: string) => path === pathname, [pathname]);
 
   useEffect(() => {
-    // Set the height of the submenu items when the submenu is opened
     if (openSubmenu !== null) {
       const key = `${openSubmenu.type}-${openSubmenu.index}`;
       if (subMenuRefs.current[key]) {
@@ -196,7 +57,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 
   return (
     <aside
-      className={clsx(appSidebarClasses.base, {
+      className={clsx(APP_SIDEBAR_CLASSES.base, {
         'w-[290px]': isExpanded || isHovered || isMobileOpen,
         'w-[90px] mt-0': !isExpanded && !isHovered && !isMobileOpen,
         'translate-x-0': isMobileOpen,
@@ -230,7 +91,18 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
               >
                 {isExpanded || isHovered || isMobileOpen ? 'Menu' : 'Menu'}
               </h2>
-              {renderMenuItems(navItems, 'main')}
+              <RenderMenuItems
+                navItems={MAIN_NAV_ITEMS}
+                menuType="main"
+                handleSubmenuToggle={handleSubmenuToggle}
+                openSubmenu={openSubmenu}
+                isExpanded={isExpanded}
+                isHovered={isHovered}
+                isMobileOpen={isMobileOpen}
+                isActive={isActive}
+                subMenuRefs={subMenuRefs}
+                subMenuHeight={subMenuHeight}
+              />
             </div>
           </div>
         </nav>
