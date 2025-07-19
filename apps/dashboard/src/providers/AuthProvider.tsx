@@ -1,16 +1,21 @@
 'use client';
 
+import { DashboardLayout, SidebarProvider } from '@lib/ui';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 
-// THIS WILL WORK
-
-export default function Providers({
+export default function AuthProvider({
   session,
   children,
 }: {
   session: Session | null;
   children: React.ReactNode;
 }) {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+  return (
+    <SessionProvider session={session}>
+      <SidebarProvider>
+        <DashboardLayout>{children}</DashboardLayout>
+      </SidebarProvider>
+    </SessionProvider>
+  );
 }
