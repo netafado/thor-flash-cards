@@ -1,6 +1,5 @@
 'use client';
-
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -9,7 +8,7 @@ import clsx from 'clsx';
 import { AppSidebarProps } from './types';
 import { APP_SIDEBAR_CLASSES, MAIN_NAV_ITEMS } from './contants';
 
-export const AppSidebar: React.FC<AppSidebarProps> = ({
+export const AppSidebar: FC<AppSidebarProps> = ({
   isExpanded,
   isMobileOpen,
   isHovered,
