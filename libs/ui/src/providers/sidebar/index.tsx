@@ -1,11 +1,5 @@
 'use client';
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useMemo,
-} from 'react';
+import { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 import type { SidebarContextType } from '../types';
 

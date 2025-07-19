@@ -1,5 +1,6 @@
-import { ButtonHTMLAttributes, FC } from 'react';
+import { FC } from 'react';
 import clx from 'clsx';
+import { ButtonProps } from './types';
 
 const SIZES = {
   sm: 'h-8 px-3 text-sm',
@@ -16,18 +17,6 @@ const BTN_COLORS = {
 
 const BASE_CLASSES =
   'inline-flex items-center justify-center rounded-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200';
-
-type ButtonColors = 'primary' | 'secondary' | 'danger' | 'brand';
-type ButtonSizes = 'sm' | 'md' | 'lg';
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: React.ReactNode;
-  icon?: React.ReactNode;
-  onClick?: () => void;
-  colors?: ButtonColors;
-  className?: string;
-  size?: ButtonSizes;
-};
 
 export const Button: FC<ButtonProps> = ({
   children,

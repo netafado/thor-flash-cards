@@ -10,10 +10,10 @@ import {
   DotsVerticalIcon,
   SelectUI,
   Button,
-} from '@thor-commerce/ui';
+} from '@lib/ui';
 import { useRouter } from 'next/navigation';
 
-export default function CreateDeck() {
+export default function Index() {
   const { toggleTheme } = useTheme();
   const router = useRouter();
   return (

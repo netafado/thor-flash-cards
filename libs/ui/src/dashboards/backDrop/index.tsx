@@ -1,12 +1,12 @@
-import React from "react";
-
 interface BackdropProps {
   isMobileOpen: boolean;
   toggleMobileSidebar: () => void;
 }
 
-export const Backdrop: React.FC<BackdropProps> = ( {isMobileOpen, toggleMobileSidebar } ) => {
-
+export const Backdrop: React.FC<BackdropProps> = ({
+  isMobileOpen,
+  toggleMobileSidebar,
+}) => {
   if (!isMobileOpen) return null;
 
   return (

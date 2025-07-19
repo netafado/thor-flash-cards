@@ -1,26 +1,25 @@
 'use client';
 
-import {
-  Content,
-  Section,
-  Card,
-  Typography,
-  Input,
-  Button,
-  Editor,
-} from '@thor-commerce/ui';
+import { Content, Section, Card, Typography, Input, Button } from '@lib/ui';
 import { useTranslations } from 'next-intl';
 import { Suspense, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 
-const markdownMock = `
+import dynamic from 'next/dynamic';
 
-`;
+// Update the import path below to the correct location of your Editor component
+const Editor = dynamic(
+  () => import('@lib/ui').then((mod) => mod.Editor || mod),
+  {
+    ssr: false,
+  }
+);
+
 export default function Index() {
   const t = useTranslations();
-  const [markdown, setMarkdown] = useState(markdownMock);
+  const [markdown, setMarkdown] = useState('');
   const [name, setName] = useState('');
-  const { data: session } = useSession();
+  const session = useSession();
 
   const handleMarkdownChange = (value: string | undefined) => {
     if (value !== undefined) {
@@ -28,23 +27,24 @@ export default function Index() {
     }
   };
 
-  const createDeck = async () => {
-    const deck = {
-      name,
-      markdown,
-    };
-    console.log('Deck created:', deck);
+  // const createDeck = async () => {
+  //   const deck = {
+  //     name,
+  //     markdown,
+  //   };
+  //   console.log('Deck created:', deck);
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('markdown', markdown);
+  //   const formData = new FormData();
+  //   formData.append('name', name);
+  //   formData.append('markdown', markdown);
 
-    const response = await fetch('/api/decks', {
-      method: 'POST',
-      body: formData,
-    });
-  };
-  console.log('Session:', session);
+  //   const response = await fetch('/api/decks', {
+  //     method: 'POST',
+  //     body: formData,
+  //   });
+  //   console.log('Response:', response);
+  // };
+
   if (!session) {
     return (
       <div>

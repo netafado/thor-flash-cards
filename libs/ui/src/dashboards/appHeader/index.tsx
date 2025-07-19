@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useRef, FC } from 'react';
 import type { SidebarContextType } from '../../providers/types';
 import { SunIcon, MoonIcon, PersonIcon } from '@radix-ui/react-icons';
