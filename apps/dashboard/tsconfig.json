@@ -21,6 +21,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@lib/ui": ["../../libs/ui/src/index.ts"],
+      "@lib/ui/*": ["../../libs/ui/src/*"],
     },
     "types": ["jest", "node"],
     "outDir": "dist",
