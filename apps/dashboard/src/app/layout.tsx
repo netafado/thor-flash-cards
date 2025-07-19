@@ -6,7 +6,7 @@ export const metadata = {
 import { SidebarProvider, ThemeProvider } from '@lib/ui';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 
-import '@thor-commerce/ui/global.css';
+import '@lib/ui/styles/global.css';
 
 export default function RootLayout({
   children,
