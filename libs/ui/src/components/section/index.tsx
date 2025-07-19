@@ -8,7 +8,7 @@ const SectionComponent: FC<SectionProps> = ({ children, title }) => {
   return (
     <section className="mb-8">
       {title && <Typography.H4 className="mb-4">{title}</Typography.H4>}
-      <div className="grid grid-cols-12 gap-4 md:gap-6">{children}</div>
+      <div className="grid grid-cols-12 gap-4 md:gap-6 h-full">{children}</div>
     </section>
   );
 };

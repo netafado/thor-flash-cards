@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { Authentication, CognitoUser } from '@nestjs-cognito/auth';
 
 @Controller('auth')
 export class AuthController {
@@ -28,5 +29,12 @@ export class AuthController {
     @Body() body: { email: string; confirmationCode: string }
   ) {
     return this.authService.confirmSignUp(body.email, body.confirmationCode);
+  }
+
+  @Get('user')
+  @Authentication()
+  async getUser(@CognitoUser('email') email: string) {
+    console.log('Fetching user:', email);
+    return this.authService.getUser(email);
   }
 }

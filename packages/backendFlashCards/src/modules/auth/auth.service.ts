@@ -5,6 +5,7 @@ import {
   SignUpCommand,
   AdminInitiateAuthCommand,
   ConfirmSignUpCommand,
+  AdminGetUserCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import { ConfigService } from '@nestjs/config';
 
@@ -48,7 +49,6 @@ export class AuthService {
 
   async signIn(email: string, password: string) {
     try {
-      console.log('signIn up user:', email);
       const command = new AdminInitiateAuthCommand({
         UserPoolId: this.configService.get('COGNITO_USER_POOL_ID'),
         ClientId: this.configService.get('COGNITO_CLIENT_ID'),
@@ -75,6 +75,16 @@ export class AuthService {
       ClientId: this.configService.get('COGNITO_CLIENT_ID'),
       Username: email,
       ConfirmationCode: confirmationCode,
+    });
+
+    const result = await this.client.send(command);
+    return result;
+  }
+
+  async getUser(email: string) {
+    const command = new AdminGetUserCommand({
+      UserPoolId: this.configService.get('COGNITO_USER_POOL_ID'),
+      Username: email,
     });
 
     const result = await this.client.send(command);

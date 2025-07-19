@@ -1,0 +1,12 @@
+
+.prose {
+  font-family: "Inter", sans-serif;
+}
+
+.editor-mdx {
+  background: red !important;
+}
+
+.prose strong {
+  font-weight: 600;
+}

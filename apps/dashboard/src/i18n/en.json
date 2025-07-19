@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "deck": {
+      "create": {
+        "title": "Create your deck",
+        "description": "Basic information",
+        "pleaseAdd": "Please add your",
+        "deckName": "Deck name"
+      }
+    }
+  }
+}

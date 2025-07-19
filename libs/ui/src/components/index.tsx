@@ -4,3 +4,5 @@ export * from './status';
 export * from './typepografy';
 export * from './select';
 export * from './button';
+export * from './input';
+export * from './mdxEditor';
