@@ -34,7 +34,8 @@ export default function Index() {
     }
   }, [state]);
 
-  if (!session.data) {
+  console.log('Session:', session);
+  if (session.status !== 'authenticated') {
     return (
       <div>
         <h1>{t('pages.deck.create.title')}</h1>

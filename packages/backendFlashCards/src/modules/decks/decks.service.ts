@@ -43,4 +43,20 @@ export class DecksService {
       throw new Error('Failed to fetch decks');
     }
   }
+
+  async deleteDeck(deckId: string): Promise<void> {
+    if (!deckId) {
+      throw new Error('Deck ID is required');
+    }
+    try {
+      const deck = await this.dataSource.models.Deck.findByPk(deckId);
+      if (!deck) {
+        throw new Error('Deck not found');
+      }
+      await deck.destroy();
+    } catch (error) {
+      console.error('Error deleting deck:', error);
+      throw new Error('Failed to delete deck');
+    }
+  }
 }

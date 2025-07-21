@@ -26,7 +26,14 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
   {
     icon: <ListBulletIcon />,
     name: 'Decks',
-    subItems: [{ name: 'Start learning', path: '/decks/create' }],
+    subItems: [
+      { name: 'All', path: '/decks' },
+      { name: 'Create', path: '/decks/create' },
+      { name: 'Settings', path: '/decks/settings' },
+      { name: 'Analytics', path: '/decks/analytics' },
+      { name: 'Integrations', path: '/decks/integrations' },
+      { name: 'Help', path: '/decks/help' },
+    ],
   },
   {
     icon: <MixIcon />,

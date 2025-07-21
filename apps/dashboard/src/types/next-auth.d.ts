@@ -11,6 +11,8 @@ declare module 'next-auth' {
       /** The user's postal address. */
       address: string;
       accessToken?: string; // Optional access token
+      refreshToken?: string; // Optional refresh token
+      expiresIn?: number; // Optional expiration time for the access token
     };
   }
 
@@ -18,12 +20,15 @@ declare module 'next-auth' {
     id: string;
     email: string;
     accessToken?: string; // Optional access token
+    refreshToken?: string; // Optional refresh token
   }
 
   interface JWT {
     id: string;
     email: string;
     accessToken?: string; // Optional access token
+    expiresIn?: number;
+    refreshToken?: string; // Optional refresh token
   }
 }
 
@@ -32,5 +37,7 @@ declare module 'next-auth/jwt' {
     id: string;
     email: string;
     accessToken?: string; // Optional access token
+    expiresIn?: number;
+    refreshToken?: string; // Optional refresh token
   }
 }

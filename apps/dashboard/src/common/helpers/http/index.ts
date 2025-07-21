@@ -1,4 +1,6 @@
+import { redirect } from 'next/dist/server/api-utils';
 import { auth } from '..';
+import { signOut } from 'next-auth/react';
 
 const API_URL = process.env.API_URL;
 
@@ -30,7 +32,7 @@ export async function authFetch<T>(
     headers['Authorization'] = `Bearer ${token}`;
   }
   const urlRequest = `${API_URL}${url}`;
-  console.log('Session in authFetch:', urlRequest);
+
   const res = await fetch(urlRequest, {
     ...options,
     headers: {

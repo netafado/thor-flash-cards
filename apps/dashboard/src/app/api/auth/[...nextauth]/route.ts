@@ -49,6 +49,8 @@ export const authOptions: NextAuthOptions = {
                 (attr: { Name: string }) => attr.Name === 'email'
               )?.Value,
               accessToken: AuthenticationResult.IdToken,
+              refreshToken: AuthenticationResult.RefreshToken,
+              expiresIn: AuthenticationResult.ExpiresIn,
             };
 
             return user;
@@ -68,13 +70,17 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.email = user.email;
         token.accessToken = user.accessToken || '';
+        token.refreshToken = user.refreshToken || '';
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.accessToken = token.accessToken;
+      session.user.refreshToken = token.refreshToken;
+      session.user.expiresIn = token.expiresIn;
+
       return session;
     },
   },
