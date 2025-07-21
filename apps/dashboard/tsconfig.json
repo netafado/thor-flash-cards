@@ -19,7 +19,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
+      "@dash/*": ["./src/*"],
       "@lib/ui": ["../../libs/ui/src/index.ts"],
       "@lib/ui/*": ["../../libs/ui/src/*"],
     },
@@ -48,7 +48,6 @@
     "eslint.config.js",
     "eslint.config.cjs",
     "eslint.config.mjs",
-    "src/app/api/auth/[...nextauth]/route.ts"
   ],
   "references": [
     {
