@@ -4,10 +4,9 @@ import { Content, Section, Card, Typography, Input, Button } from '@lib/ui';
 import { useTranslations } from 'next-intl';
 import { Suspense, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
-
+import { createDeck } from '@dash/common/actions/decks';
 import dynamic from 'next/dynamic';
 
-// Update the import path below to the correct location of your Editor component
 const Editor = dynamic(
   () => import('@lib/ui').then((mod) => mod.Editor || mod),
   {
@@ -27,25 +26,7 @@ export default function Index() {
     }
   };
 
-  // const createDeck = async () => {
-  //   const deck = {
-  //     name,
-  //     markdown,
-  //   };
-  //   console.log('Deck created:', deck);
-
-  //   const formData = new FormData();
-  //   formData.append('name', name);
-  //   formData.append('markdown', markdown);
-
-  //   const response = await fetch('/api/decks', {
-  //     method: 'POST',
-  //     body: formData,
-  //   });
-  //   console.log('Response:', response);
-  // };
-
-  if (!session) {
+  if (!session.data) {
     return (
       <div>
         <h1>{t('pages.deck.create.title')}</h1>
@@ -58,7 +39,7 @@ export default function Index() {
     <Content title={t('pages.deck.create.title')} pages={['deck']}>
       <Section>
         <Section.Item type="full">
-          <form>
+          <form action={createDeck}>
             <Card>
               <Typography.H1>{t('pages.deck.create.title')}</Typography.H1>
               <Typography.Paragraph>
@@ -67,12 +48,18 @@ export default function Index() {
               <Input
                 placeholder={t('pages.deck.create.deckName')}
                 className="mb-4 mt-2"
+                name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
 
               <Suspense fallback={<div>Loading editor...</div>}>
-                <Editor markdown={markdown} onChange={handleMarkdownChange} />
+                <Editor
+                  description="description"
+                  markdown={markdown}
+                  name="description"
+                  onChange={handleMarkdownChange}
+                />
               </Suspense>
               <Button className="mt-2">{t('pages.deck.create.title')}</Button>
             </Card>

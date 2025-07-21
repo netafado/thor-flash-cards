@@ -14,6 +14,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  console.log('Session in RootLayout:', session);
+
   return <Providers session={session}>{children}</Providers>;
 }

@@ -48,6 +48,7 @@ export const authOptions: NextAuthOptions = {
               email: data.UserAttributes.find(
                 (attr: { Name: string }) => attr.Name === 'email'
               )?.Value,
+              accessToken: AuthenticationResult.IdToken,
             };
 
             return user;

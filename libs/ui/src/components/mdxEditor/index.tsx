@@ -4,12 +4,27 @@ import MDEditor from '@uiw/react-md-editor';
 interface EditorProps {
   markdown: string;
   onChange: (value: string | undefined) => void;
+  description?: string;
+  id?: string;
+  name?: string;
 }
 
-export const Editor = ({ markdown, onChange }: EditorProps) => {
+export const Editor = ({
+  markdown,
+  onChange,
+  id = 'markdown-editor',
+  name = 'markdown',
+}: EditorProps) => {
   return (
     <div data-color-mode="dark" className="mt-2">
-      <MDEditor value={markdown} {...{ onChange }} />
+      <MDEditor
+        textareaProps={{
+          id,
+          name,
+        }}
+        value={markdown}
+        {...{ onChange }}
+      />
     </div>
   );
 };
