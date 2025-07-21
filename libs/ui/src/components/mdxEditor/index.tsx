@@ -7,6 +7,7 @@ interface EditorProps {
   description?: string;
   id?: string;
   name?: string;
+  disabled?: boolean;
 }
 
 export const Editor = ({
@@ -14,13 +15,16 @@ export const Editor = ({
   onChange,
   id = 'markdown-editor',
   name = 'markdown',
+  disabled = false,
 }: EditorProps) => {
   return (
     <div data-color-mode="dark" className="mt-2">
       <MDEditor
+        aria-disabled={disabled}
         textareaProps={{
           id,
           name,
+          disabled,
         }}
         value={markdown}
         {...{ onChange }}

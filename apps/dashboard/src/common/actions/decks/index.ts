@@ -3,10 +3,10 @@
 import { auth } from '@dash/common/helpers';
 import { authFetch } from '@dash/common/helpers/http';
 import type { Deck } from '@dash/types';
-export async function createDeck(formData: FormData) {
-  const title = formData.get('name');
-  const content = formData.get('description');
-  console.log('Creating deck with title:', title, 'and content:', content);
+export async function createDeck(prevState: Deck | null, queryData: FormData) {
+  const title = queryData.get('name');
+  const content = queryData.get('description');
+  console.log('Creating deck with prevState:', prevState);
   if (typeof title !== 'string' || typeof content !== 'string') {
     throw new Error('Invalid form data');
   }
