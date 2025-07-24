@@ -15,9 +15,21 @@ const Editor = dynamic(
   }
 );
 
+const deckInitialState = {
+  id: '',
+  name: '',
+  title: '',
+  description: '',
+  background_color: '',
+  repetions_days: 2,
+};
+
 export default function Index() {
   const t = useTranslations();
-  const [state, formAction, isPending] = useActionState(createDeck, false);
+  const [state, formAction, isPending] = useActionState(
+    createDeck,
+    deckInitialState
+  );
   const [markdown, setMarkdown] = useState('');
   const [name, setName] = useState('');
   const session = useSession();

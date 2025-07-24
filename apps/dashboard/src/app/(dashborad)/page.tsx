@@ -17,10 +17,7 @@ export default function Index() {
   const { toggleTheme } = useTheme();
   const router = useRouter();
   return (
-    <Content
-      title="we are here to help you in your journey"
-      pages={['Home', 'Dashboard']}
-    >
+    <Content title="root deck" pages={['Home', 'Dashboard']}>
       <Section>
         <Section.Item type="1/3" lg="1/3" md="1/2">
           <Card

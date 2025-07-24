@@ -5,7 +5,8 @@ export type DeckModel = {
   background_color: string;
   repetions_days: string;
   cards?: CardModel[] | null;
-  title: string; // Assuming title is part of the deck object
+  title: string;
+  description: string;
 };
 
 export type DeckInput = Partial<DeckModel>;

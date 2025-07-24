@@ -1,6 +1,6 @@
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
+
 import { auth } from '..';
-import { signOut } from 'next-auth/react';
 
 const API_URL = process.env.API_URL;
 
@@ -40,6 +40,11 @@ export async function authFetch<T>(
       ...options?.headers,
     },
   });
+  console.log('Response from API:', res.status);
+  if (res.status === 401) {
+    console.error('Unauthorized access, signing out...');
+    redirect('/api/auth/signout?callbackUrl=/');
+  }
 
   return res.json();
 }

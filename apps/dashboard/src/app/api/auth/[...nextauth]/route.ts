@@ -84,6 +84,11 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  session: {
+    strategy: 'jwt',
+    // Set session max age to match your token expiry
+    maxAge: 60 * 60, // 1 hour
+  },
 };
 
 const handler = NextAuth(authOptions);

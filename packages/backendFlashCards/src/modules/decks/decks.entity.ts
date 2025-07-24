@@ -38,6 +38,12 @@ export class Deck extends Model<DeckModel> {
 
   @Column({
     type: DataType.STRING,
+    allowNull: true,
+  })
+  description: string;
+
+  @Column({
+    type: DataType.STRING,
     allowNull: false,
   })
   title: string;
