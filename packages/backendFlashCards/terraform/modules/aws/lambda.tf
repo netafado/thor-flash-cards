@@ -266,33 +266,15 @@ resource "aws_security_group" "vpc_endpoint_sg" {
   })
 }
 
-#  Create NAT Gateway for Lambda internet access
-resource "aws_eip" "nat_gateway" {
-  domain = "vpc"
-  
-  tags = merge(local.tags, {
-    Name = "${var.project_name}-nat-gateway-eip"
-  })
-}
 
-resource "aws_nat_gateway" "main" {
-  allocation_id = aws_eip.nat_gateway.id
-  subnet_id     = aws_subnet.public_a.id
 
-  tags = merge(local.tags, {
-    Name = "${var.project_name}-nat-gateway"
-  })
-
-  depends_on = [aws_internet_gateway.main]
-}
-
-# Update private route table to use NAT Gateway
+# Update private route table to use NAT instance
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.main.id
+    cidr_block  = "0.0.0.0/0"
+    network_interface_id = aws_instance.nat_instance.primary_network_interface_id
   }
 
   tags = merge(local.tags, {

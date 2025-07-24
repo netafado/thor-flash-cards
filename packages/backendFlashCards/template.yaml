@@ -19,10 +19,10 @@ Resources:
           DATABASE_URL: ${env:DB_URL}
           DB_USERNAME: ${env:DB_USERNAME}
           DB_PASSWORD: ${env:DB_PASSWORD}
-          DB_NAME:
+          DB_NAME: ${env:DB_NAME}
           DB_PORT: 5432
-          COGNITO_USER_POOL_ID: ${aws_cognito_user_pool_id}
-          COGNITO_CLIENT_ID: ${aws_cognito_client_id}
+          COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
+          COGNITO_CLIENT_ID: ${env:COGNITO_CLIENT_ID}
           COGNITO_REGION: us-east-1
       Events:
         ApiEvent:
