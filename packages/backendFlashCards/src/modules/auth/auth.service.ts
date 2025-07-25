@@ -90,4 +90,18 @@ export class AuthService {
     const result = await this.client.send(command);
     return result;
   }
+
+  async refreshToken(refreshToken: string) {
+    const command = new AdminInitiateAuthCommand({
+      UserPoolId: this.configService.get('COGNITO_USER_POOL_ID'),
+      ClientId: this.configService.get('COGNITO_CLIENT_ID'),
+      AuthFlow: 'REFRESH_TOKEN_AUTH',
+      AuthParameters: {
+        REFRESH_TOKEN: refreshToken,
+      },
+    });
+
+    const result = await this.client.send(command);
+    return result;
+  }
 }

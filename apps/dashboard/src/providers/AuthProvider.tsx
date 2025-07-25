@@ -12,7 +12,7 @@ export default function AuthProvider({
   children: React.ReactNode;
 }) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} refetchInterval={5 * 60}>
       <SidebarProvider>
         <DashboardLayout>{children}</DashboardLayout>
       </SidebarProvider>

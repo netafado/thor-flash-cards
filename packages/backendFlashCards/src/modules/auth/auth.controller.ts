@@ -37,4 +37,11 @@ export class AuthController {
     console.log('Fetching user:', email);
     return this.authService.getUser(email);
   }
+
+  @Get('refresh-token')
+  @Authentication()
+  async refreshToken(@CognitoUser('refreshToken') refreshToken: string) {
+    console.log('Refreshing token for:', refreshToken);
+    return this.authService.refreshToken(refreshToken);
+  }
 }

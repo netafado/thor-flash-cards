@@ -1,7 +1,10 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 const base_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4004'; // Adjust the base URL as needed
-const handler = NextAuth({
+
+import { NextAuthOptions } from 'next-auth';
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -18,13 +21,6 @@ const handler = NextAuth({
         },
       },
       async authorize(credentials, req) {
-        // You need to provide your own logic here that takes the credentials
-        // submitted and returns either a object representing a user or value
-        // that is false/null if the credentials are invalid.
-        // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-        // You can also use the `req` object to obtain additional parameters
-        // (i.e., the request IP address)
-        console.log('Authorizing user:', credentials?.email);
         const res = await fetch(`${base_url}/auth/signin`, {
           method: 'POST',
           body: JSON.stringify(credentials),
@@ -32,7 +28,7 @@ const handler = NextAuth({
         });
         const { AuthenticationResult } = await res.json();
         const userUrl = `${base_url}/auth/user`;
-        console.log('User attributes:', userUrl, AuthenticationResult.IdToken);
+
         if (AuthenticationResult) {
           try {
             const result = await fetch(`${userUrl}`, {
@@ -46,12 +42,17 @@ const handler = NextAuth({
 
             const data = await result.json();
             const user = {
-              id: data.UserAttributes.find((attr) => attr.Name === 'sub')
-                ?.Value,
-              email: data.UserAttributes.find((attr) => attr.Name === 'email')
-                ?.Value,
+              id: data.UserAttributes.find(
+                (attr: { Name: string }) => attr.Name === 'sub'
+              )?.Value,
+              email: data.UserAttributes.find(
+                (attr: { Name: string }) => attr.Name === 'email'
+              )?.Value,
+              accessToken: AuthenticationResult.IdToken,
+              refreshToken: AuthenticationResult.RefreshToken,
+              expiresIn: AuthenticationResult.ExpiresIn,
             };
-            console.log('User attributes:', user);
+
             return user;
           } catch (error) {
             console.error('Error fetching user attributes:', error);
@@ -63,6 +64,33 @@ const handler = NextAuth({
       },
     }),
   ],
-});
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.accessToken = user.accessToken || '';
+        token.refreshToken = user.refreshToken || '';
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      session.user.id = token.id;
+      session.user.email = token.email;
+      session.user.accessToken = token.accessToken;
+      session.user.refreshToken = token.refreshToken;
+      session.user.expiresIn = token.expiresIn;
+
+      return session;
+    },
+  },
+  session: {
+    strategy: 'jwt',
+    // Set session max age to match your token expiry
+    maxAge: 60 * 60, // 1 hour
+  },
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

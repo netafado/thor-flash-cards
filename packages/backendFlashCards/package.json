@@ -57,9 +57,12 @@
         "continuous": true,
         "executor": "nx:run-commands",
         "defaultConfiguration": "development",
+        "dependsOn": [
+          "build:sam"
+        ],
         "options": {
            "cwd": "packages/backendFlashCards",
-          "command": "sam local start-api -t template.yaml --port 4004"
+          "command": "sam local start-api -t template.yaml --port 4004 --skip-pull-image"
         }
       },
       "deploy:lambda": {
