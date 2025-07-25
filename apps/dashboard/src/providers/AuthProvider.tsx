@@ -3,7 +3,7 @@
 import { DashboardLayout, SidebarProvider } from '@lib/ui';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
-
+import Auth from '@dash/common/hoc/auth';
 export default function AuthProvider({
   session,
   children,
@@ -14,7 +14,9 @@ export default function AuthProvider({
   return (
     <SessionProvider session={session} refetchInterval={5 * 60}>
       <SidebarProvider>
-        <DashboardLayout>{children}</DashboardLayout>
+        <Auth>
+          <DashboardLayout>{children}</DashboardLayout>
+        </Auth>
       </SidebarProvider>
     </SessionProvider>
   );
