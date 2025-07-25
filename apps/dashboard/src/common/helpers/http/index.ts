@@ -31,7 +31,10 @@ export async function authFetch<T>(
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
+  } else {
+    redirect('/api/sinin');
   }
+
   const urlRequest = `${API_URL}${url}`;
 
   const res = await fetch(urlRequest, {
@@ -41,7 +44,7 @@ export async function authFetch<T>(
       ...options?.headers,
     },
   });
-  console.log('Response from API:', res.status);
+
   if (res.status === 401) {
     await redirect('/api/auth/signout?callbackUrl=/');
   }
