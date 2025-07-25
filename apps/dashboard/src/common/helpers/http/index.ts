@@ -32,7 +32,7 @@ export async function authFetch<T>(
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   } else {
-    redirect('/api/sinin');
+    redirect('/api/signin?callbackUrl=/');
   }
 
   const urlRequest = `${API_URL}${url}`;
