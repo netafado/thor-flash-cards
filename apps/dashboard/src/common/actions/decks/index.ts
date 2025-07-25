@@ -1,7 +1,7 @@
 'use server';
 
 import { authFetch } from '@dash/common/helpers/http';
-import type { Deck } from '@dash/types';
+import type { Deck, Card } from '@dash/types';
 
 export async function createDeck(_prevState: Deck | null, queryData: FormData) {
   'use server';
@@ -42,6 +42,34 @@ export async function getDeckById(deckId: string) {
 
   const response = await authFetch<Deck>(`/decks/${deckId}`, {
     method: 'GET',
+    cache: 'default',
+  });
+
+  return response;
+}
+
+export async function createCard(queryData: FormData) {
+  'use server';
+  const front = queryData.get('front');
+  const back = queryData.get('back');
+  const deckId = queryData.get('deck-id');
+  const name = queryData.get('title');
+
+  if (typeof front !== 'string' || typeof back !== 'string') {
+    throw new Error('Invalid form data');
+  }
+
+  const card = {
+    name,
+    front,
+    back,
+    deckId,
+    dificulty: 'HARD',
+  };
+  console.log('Creating card with data:', card);
+  const response = await authFetch<Card>(`/cards`, {
+    method: 'POST',
+    body: JSON.stringify(card),
   });
 
   return response;

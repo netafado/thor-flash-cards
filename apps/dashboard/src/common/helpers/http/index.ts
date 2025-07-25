@@ -1,3 +1,4 @@
+'use server';
 import { redirect } from 'next/navigation';
 
 import { auth } from '..';
@@ -42,8 +43,7 @@ export async function authFetch<T>(
   });
   console.log('Response from API:', res.status);
   if (res.status === 401) {
-    console.error('Unauthorized access, signing out...');
-    redirect('/api/auth/signout?callbackUrl=/');
+    await redirect('/api/auth/signout?callbackUrl=/');
   }
 
   return res.json();
