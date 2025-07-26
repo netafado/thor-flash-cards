@@ -2,7 +2,7 @@ import { Card, Content, Section, Typography } from '@lib/ui';
 import { getDeckById } from '@dash/common/actions/decks';
 import { EditorView } from '@lib/ui';
 
-import CardForm from '@dash/app/(dashborad)/_components/cardForm';
+import CardForm from '@dash/app/(dashboard)/_components/cardForm';
 
 export default async function Index({ params }: { params: { id: string } }) {
   const { id } = await params;

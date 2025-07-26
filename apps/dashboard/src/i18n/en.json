@@ -7,6 +7,17 @@
         "pleaseAdd": "Please add your",
         "deckName": "Deck name"
       }
+    },
+    "login": {
+      "title": "Sign in to your account",
+      "description": "Please enter your credentials to continue",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create an account",
+      "signIn": "Sign in"
     }
   }
 }
