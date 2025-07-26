@@ -22,6 +22,7 @@
       "@dash/*": ["./src/*"],
       "@lib/ui": ["../../libs/ui/src/index.ts"],
       "@lib/ui/*": ["../../libs/ui/src/*"],
+      "@auth": ["./auth.ts"],
     },
     "types": ["jest", "node"],
     "outDir": "dist",
@@ -30,6 +31,7 @@
   "include": [
     "../../apps/dashboard/.next/types/**/*.ts",
     "../../dist/apps/dashboard/.next/types/**/*.ts",
+    "./auth.ts",
     "next-env.d.ts",
     "src/**/*.js",
     "src/**/*.jsx",
