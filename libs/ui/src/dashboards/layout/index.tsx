@@ -10,12 +10,15 @@ import {
 
 import { ReactNode } from 'react';
 
+import { Action } from '../../providers/types';
 interface DashboardLayoutProps {
   children: ReactNode;
+  userActions?: Action[];
 }
 
 export const DashboardLayout: FC<DashboardLayoutProps> = ({
   children,
+  userActions = [],
 }: DashboardLayoutProps) => {
   const {
     isExpanded,
@@ -58,6 +61,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
             toggleSidebar,
             toggleMobileSidebar,
             toggleTheme,
+            userActions,
           }}
         />
         {children}

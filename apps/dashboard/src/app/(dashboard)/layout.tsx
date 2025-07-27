@@ -4,9 +4,7 @@ export const metadata = {
 };
 
 import { auth } from '@dash/common/helpers';
-import Providers from '@dash/providers/AuthProvider';
-
-import '@thor-commerce/ui/global.css';
+import Providers from '@dash/providers/dashboardPages';
 
 export default async function RootLayout({
   children,
