@@ -5,7 +5,12 @@
     "jsx": "preserve",
     "types": ["jest", "node"],
     "module": "esnext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "paths": {
+      "@lib/ui": ["../../libs/ui/src/index.ts"],
+      "@lib/ui/*": ["../../libs/ui/src/*"],
+      "@auth": ["./auth.ts"],
+    },
   },
   "include": [
     "jest.config.ts",
