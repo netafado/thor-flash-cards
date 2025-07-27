@@ -2,10 +2,11 @@
 import { useState, useRef, FC } from 'react';
 import type { SidebarContextType } from '../../providers/types';
 import { SunIcon, MoonIcon, PersonIcon } from '@radix-ui/react-icons';
+import { DropdownMenu } from 'radix-ui';
 
 type AppHeaderProps = Pick<
   SidebarContextType,
-  'isMobileOpen' | 'toggleSidebar' | 'toggleMobileSidebar'
+  'isMobileOpen' | 'toggleSidebar' | 'toggleMobileSidebar' | 'userActions'
 > & {
   toggleTheme: () => void;
 };
@@ -15,6 +16,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
   toggleSidebar,
   toggleMobileSidebar,
   toggleTheme,
+  userActions = [],
 }) => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
 
@@ -142,14 +144,37 @@ export const AppHeader: FC<AppHeaderProps> = ({
               <SunIcon className="hidden dark:block" width={15} height={15} />
               <MoonIcon className="dark:hidden" width={15} height={15} />
             </button>
-
-            <button className="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-150 rounded-full hover:text-dark-900 h-9 w-9 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white">
-              <PersonIcon
-                className="dark:color-gray-400"
-                width={15}
-                height={15}
-              />
-            </button>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger
+                className="inline-flex size-[35px] items-center justify-center rounded-full bg-white text-violet11 shadow-[0_2px_10px] shadow-blackA4 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-black"
+                aria-label="Customise options"
+              >
+                <button className="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-150 rounded-full hover:text-dark-900 h-9 w-9 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white">
+                  <PersonIcon
+                    className="dark:color-gray-400"
+                    width={15}
+                    height={15}
+                  />
+                </button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  className="min-w-[220px] p-2 dark:bg-dark-900 shadow-theme-xs focus:border-brand-300  rounded-lg border border-gray-300 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 "
+                  sideOffset={5}
+                >
+                  {userActions?.map((action, index) => (
+                    <DropdownMenu.Item
+                      key={index}
+                      className="group text-left relative p-3 flex h-[25px] select-none items-center rounded-[3px] pl-[25px] pr-[5px] text-[13px] leading-none text-violet11 outline-none data-[disabled]:pointer-events-none data-[highlighted]:bg-violet9 data-[disabled]:text-mauve8 data-[highlighted]:text-violet1"
+                      onClick={action.onClick}
+                    >
+                      {action.icon}
+                      {action.label}
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
           </div>
         </div>
       </div>

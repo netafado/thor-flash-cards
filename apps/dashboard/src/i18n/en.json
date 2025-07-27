@@ -11,13 +11,18 @@
     "login": {
       "title": "Sign in to your account",
       "description": "Please enter your credentials to continue",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
       "email": "Email",
       "password": "Password",
       "submit": "Sign in",
       "forgotPassword": "Forgot password?",
       "noAccount": "Don't have an account?",
       "createAccount": "Create an account",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "trial": "Start your free trial",
+      "error": "Invalid email or password. Please try again.",
+      "errorMessage": "An error occurred while signing in. Please try again later."
     }
   }
 }

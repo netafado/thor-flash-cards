@@ -8,13 +8,13 @@ import { useActionState } from 'react';
 const SignInForm = () => {
   const t = useTranslations();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
   );
   return (
-    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
       <form action={formAction} method="POST" className="space-y-6">
         <div>
           <label
@@ -28,6 +28,7 @@ const SignInForm = () => {
               id="email"
               name="email"
               type="email"
+              placeholder={t('pages.login.emailPlaceholder')}
               className="block w-full"
             />
           </div>
@@ -44,7 +45,7 @@ const SignInForm = () => {
             <div className="text-sm">
               <a
                 href="#"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                className="font-semibold font-semibold text-brand-600 hover:text-brand-500"
               >
                 {t('pages.login.forgotPassword')}
               </a>
@@ -55,6 +56,7 @@ const SignInForm = () => {
               id="password"
               name="password"
               type="password"
+              placeholder={t('pages.login.passwordPlaceholder')}
               className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
             />
           </div>
@@ -80,7 +82,7 @@ const SignInForm = () => {
         {' '}
         <a
           href="#"
-          className="font-semibold text-indigo-600 hover:text-indigo-500"
+          className="font-semibold text-brand-600 hover:text-brand-500"
         >
           {t('pages.login.trial')}
         </a>

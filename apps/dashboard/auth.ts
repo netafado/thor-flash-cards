@@ -66,7 +66,7 @@ export const authOptions: NextAuthConfig = {
   debug: process.env.NODE_ENV !== 'production' ? true : false,
   providers,
   pages: {
-    signIn: '/auth/login',
+    signIn: '/login',
   },
   callbacks: {
     async jwt({ token, user }: { token: any; user?: any }) {
