@@ -2,8 +2,18 @@
 import { redirect } from 'next/navigation';
 
 import { auth } from '..';
+import { DefaultSession } from 'next-auth';
 
 const API_URL = process.env.API_URL;
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      address: string;
+      accessToken: string;
+    } & DefaultSession['user'];
+  }
+}
 
 export async function fetcher(url: string, options?: RequestInit) {
   const res = await fetch(`${API_URL}${url}`, {
