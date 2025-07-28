@@ -15,6 +15,7 @@ const buttonProps = {
   type: 'button',
   role: 'button',
 };
+
 export const Card: FC<CardProps> = ({ children, className = '', onClick }) => {
   return (
     <div

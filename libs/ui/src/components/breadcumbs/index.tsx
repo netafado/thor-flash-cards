@@ -16,7 +16,10 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ title, pages }) => {
               {title}
             </h1>
 
-            <ul className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <ul
+              className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+              aria-label="breadcrumb"
+            >
               <li className="text-custom-sm hover:text-blue">
                 <Link href="/">Home /</Link>
               </li>
@@ -25,6 +28,9 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ title, pages }) => {
                 <li
                   className="text-custom-sm last:text-blue capitalize text-sm text-gray-500 dark:text-gray-400"
                   key={key}
+                  {...(key === pages.length - 1
+                    ? { 'aria-current': 'page' }
+                    : {})}
                 >
                   {page}
                 </li>
