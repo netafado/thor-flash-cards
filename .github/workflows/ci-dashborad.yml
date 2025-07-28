@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths: ['apps/dashboard/**', 'libs/ui/**']
+  push:
+    branches: [main, develop]
+    paths: ['apps/dashboard/**', 'libs/ui/**']
+
+env:
+  NX_BASE: main # Base branch for affected commands
+  NX_NO_CLOUD: true # Disable Nx Cloud for this workflow
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn nx lint dashboard
+
+      - name: Test
+        run: yarn nx test dashboard
+
+      - name: Build
+        run: yarn nx build dashboard
