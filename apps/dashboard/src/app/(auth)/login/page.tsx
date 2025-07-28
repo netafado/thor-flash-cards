@@ -1,6 +1,7 @@
 import SignIn from '@dash/components/signin';
 import { Typography } from '@lib/ui';
 import { useTranslations } from 'next-intl';
+import { Suspense } from 'react';
 import Image from 'next/image';
 
 export default function PageLogin() {
@@ -20,8 +21,9 @@ export default function PageLogin() {
             {t('pages.login.title')}
           </Typography.H2>
         </div>
-
-        <SignIn />
+        <Suspense>
+          <SignIn />
+        </Suspense>
       </div>
     </>
   );
