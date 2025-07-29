@@ -1,19 +1,8 @@
+import '@testing-library/jest-dom';
+
 global.console.warn = (e) => e;
 global.console.error = (e) => e;
 global.console.debug = (e) => e;
-
-Object.defineProperty(window, 'location', {
-  value: {
-    origin: 'http://everest.com',
-    protocol: 'http:',
-    host: 'everest.com',
-    hostname: 'everest.com',
-    search: '',
-    href: 'http://everest.com/',
-    pathname: '/',
-  },
-  writable: true,
-});
 
 jest.mock('next-auth', () => ({
   __esModule: true,

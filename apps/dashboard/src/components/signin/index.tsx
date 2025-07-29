@@ -62,7 +62,7 @@ const SignInForm = () => {
           </div>
         </div>
         {errorMessage && (
-          <div className="text-red-600 text-sm/6">
+          <div className="text-red-600 text-sm/6 bg-red-50 p-2 rounded-md">
             {t('pages.login.error', { error: errorMessage })}
           </div>
         )}
