@@ -1,7 +1,7 @@
 'use client';
-import { Button, Card, Editor, Input, Section } from '@lib/ui';
+import { Button, Editor, Input } from '@lib/ui';
 import { createCard } from '@dash/common/actions/decks';
-import { useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 
 type CardFormProps = {
   deckId: string;
@@ -10,48 +10,59 @@ type CardFormProps = {
 
 const CardForm = ({ deckId, name }: CardFormProps) => {
   const [markdown, setMarkdown] = useState('');
+
+  const [state, formAction, isPending] = useActionState(createCard, {
+    id: '',
+    deckId,
+    name: name,
+    front: '',
+    back: '',
+    dificulty: 1, // or provide a default value as required by your Card type
+  });
+
   const handleMarkdownChange = (value: string | undefined) => {
     if (value !== undefined) {
       setMarkdown(value);
     }
   };
 
-  return (
-    <Section>
-      <Section.Item type="full" lg="full" md="full">
-        <Card className="w-full">
-          <form
-            action={async (formData: FormData) => {
-              console.log('Form Data:', Array.from(formData.keys()));
-              await createCard(formData);
-            }}
-            className="p-4"
-          >
-            <Input
-              placeholder="Deck ID"
-              className="d-none"
-              name="deck-id"
-              defaultValue={deckId}
-            />
-            <Input
-              placeholder="name"
-              className="d-none"
-              name="title"
-              defaultValue={name}
-            />
+  useEffect(() => {
+    if (state) {
+      setMarkdown('');
+    }
+  }, [state]);
 
-            <Input placeholder="question" className="mb-4 mt-2" name="front" />
-            <Editor
-              description="description"
-              markdown={markdown}
-              name="back"
-              onChange={handleMarkdownChange}
-            />
-            <Button type="submit">create</Button>
-          </form>
-        </Card>
-      </Section.Item>
-    </Section>
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <form action={formAction} className="p-4">
+      <Input
+        placeholder="Deck ID"
+        className="d-none hidden"
+        name="deck-id"
+        defaultValue={deckId}
+      />
+      <Input
+        placeholder="name"
+        className="d-none"
+        name="title"
+        defaultValue={name}
+        disabled
+      />
+
+      <Input placeholder="question" className="mb-4 mt-2" name="front" />
+      <Editor
+        description="description"
+        markdown={markdown}
+        name="back"
+        onChange={handleMarkdownChange}
+      />
+      <Button className="mt-4" type="submit">
+        create
+      </Button>
+    </form>
   );
 };
 

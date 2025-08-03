@@ -1,4 +1,4 @@
-import { Card, Content, Section, Typography } from '@lib/ui';
+import { Card, Content, Section, Typography, Modal, Button } from '@lib/ui';
 import { getDeckById } from '@dash/common/actions/decks';
 import { EditorView } from '@lib/ui';
 
@@ -21,16 +21,20 @@ export default async function Index({ params }: { params: { id: string } }) {
           </Card>
         </Section.Item>
       </Section>
-      <CardForm deckId={deckId} name={deck.title} />
+      <Modal
+        trigger={<Button>{deck.cards?.length ?? 0} Cards</Button>}
+        title={'create card'}
+        description="Create a new card for this deck"
+      >
+        <CardForm deckId={deckId} name={deck.title} />
+      </Modal>
       {(deck.cards ?? []).length > 0 && (
         <Section>
           {deck.cards?.map((card) => (
             <Section.Item key={card.id} type="full">
               <Card>
-                <div className="p">
-                  <Typography.H3>{card.front}</Typography.H3>
-                  <EditorView markdown={card.back} />
-                </div>
+                <Typography.H3>{card.front}</Typography.H3>
+                <EditorView markdown={card.back} />
               </Card>
             </Section.Item>
           ))}

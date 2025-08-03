@@ -108,7 +108,7 @@ const RenderMenuItems: FC<RenderMenuItemsProps> = ({
                   : '0px',
             }}
           >
-            <ul className="space-y-1 ml-9">
+            <ul className="space-y-1 ml-4 mt-2">
               {nav.subItems.map((subItem) => (
                 <li key={subItem.name}>
                   <Link

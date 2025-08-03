@@ -35,22 +35,6 @@ const SignInForm = () => {
         </div>
 
         <div>
-          <div className="flex items-center justify-between">
-            <label
-              htmlFor="password"
-              className="block text-sm/6 font-medium text-gray-900"
-            >
-              {t('pages.login.password')}
-            </label>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-semibold font-semibold text-brand-600 hover:text-brand-500"
-              >
-                {t('pages.login.forgotPassword')}
-              </a>
-            </div>
-          </div>
           <div className="mt-2">
             <Input
               id="password"
