@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { Authentication, CognitoUser } from '@nestjs-cognito/auth';
 import { DecksService } from './decks.service';
 import type { DeckModel } from './decks.model';
@@ -39,5 +39,13 @@ export class DecksController {
       user_id: cognitoUser.sub,
     });
     return thisDeck;
+  }
+
+  @Delete(':id')
+  async deleteDeck(@Param('id') deckId: string): Promise<void> {
+    if (!deckId) {
+      throw new Error('Deck ID is required');
+    }
+    await this.decksService.deleteDeck(deckId);
   }
 }

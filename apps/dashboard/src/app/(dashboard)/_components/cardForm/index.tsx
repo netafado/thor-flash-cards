@@ -17,7 +17,7 @@ const CardForm = ({ deckId, name }: CardFormProps) => {
     name: name,
     front: '',
     back: '',
-    dificulty: 1, // or provide a default value as required by your Card type
+    dificulty: 1,
   });
 
   const handleMarkdownChange = (value: string | undefined) => {

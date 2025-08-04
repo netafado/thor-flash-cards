@@ -18,3 +18,6 @@ export const BG_DEFAULT = 'bg-white dark:bg-gray-900';
 
 export const BG_DEFAULT_DARK =
   'bg-white dark:bg-gray-900 text-gray-900 dark:text-white';
+
+export const BORDER_DEFAULT =
+  'border border-gray-200 dark:border-gray-800 dark:bg-white/[0.03]';
