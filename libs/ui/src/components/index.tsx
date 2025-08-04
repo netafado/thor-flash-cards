@@ -8,3 +8,4 @@ export * from './button';
 export * from './input';
 export * from './mdxEditor';
 export * from './loading';
+export * from './dropdown';
