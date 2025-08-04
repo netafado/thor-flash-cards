@@ -1,5 +1,6 @@
 export * from './section';
 export * from './card';
+export * from './modal';
 export * from './status';
 export * from './typepografy';
 export * from './select';

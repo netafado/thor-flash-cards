@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { authenticate } from '@dash/common/actions/authenticate';
 import { useSearchParams } from 'next/navigation';
 import { useActionState } from 'react';
+import Link from 'next/link';
 
 const SignInForm = () => {
   const t = useTranslations();
@@ -35,6 +36,22 @@ const SignInForm = () => {
         </div>
 
         <div>
+          <div className="flex items-center justify-between">
+            <label
+              htmlFor="password"
+              className="block text-sm/6 font-medium text-gray-900"
+            >
+              {t('pages.login.password')}
+            </label>
+            <div className="text-sm">
+              <Link
+                href="/forgot-password"
+                className="font-semibold font-semibold text-brand-600 hover:text-brand-500"
+              >
+                {t('pages.login.forgotPassword')}
+              </Link>
+            </div>
+          </div>
           <div className="mt-2">
             <Input
               id="password"

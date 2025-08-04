@@ -45,10 +45,11 @@ export class Card extends Model<CardModel> {
   })
   back!: string;
 
+
   @Column({
     type: DataType.ENUM('EASY', 'MEDIUM', 'HARD'),
     allowNull: false,
-    defaultValue: 5,
+    defaultValue:'EASY',
   })
   dificulty!: 'EASY' | 'MEDIUM' | 'HARD';
 

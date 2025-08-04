@@ -149,13 +149,11 @@ export const AppHeader: FC<AppHeaderProps> = ({
                 className="inline-flex size-[35px] items-center justify-center rounded-full bg-white text-violet11 shadow-[0_2px_10px] shadow-blackA4 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-black"
                 aria-label="Customise options"
               >
-                <button className="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-150 rounded-full hover:text-dark-900 h-9 w-9 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white">
-                  <PersonIcon
-                    className="dark:color-gray-400"
-                    width={15}
-                    height={15}
-                  />
-                </button>
+                <PersonIcon
+                  className="dark:color-gray-400"
+                  width={15}
+                  height={15}
+                />
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>
                 <DropdownMenu.Content

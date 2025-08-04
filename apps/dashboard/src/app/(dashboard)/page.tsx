@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Index() {
   const { toggleTheme } = useTheme();
+
   const router = useRouter();
   return (
     <Content title="root deck" pages={['Home', 'Dashboard']}>

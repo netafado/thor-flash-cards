@@ -16,7 +16,7 @@ const BTN_COLORS = {
 };
 
 const BASE_CLASSES =
-  'inline-flex items-center justify-center rounded-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200';
+  'inline-flex items-center justify-center font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200';
 
 export const Button: FC<ButtonProps> = ({
   children,

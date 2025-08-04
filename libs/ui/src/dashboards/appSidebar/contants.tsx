@@ -9,10 +9,10 @@ export const APP_SIDEBAR_CLASSES = {
   translateXNone: '-translate-x-full',
   naveIcons: 'w-[20px] h-[20px]',
   menuItem:
-    'hover:bg-brand-500/20 p-2 transition-all duration-300 ease-in-out rounded-md flex items-center gap-2 cursor-pointer relative flex w-full gap-3',
+    'hover:bg-brand-500/20 p-2 transition-all duration-300 ease-in-out rounded-sm flex items-center gap-2 cursor-pointer relative flex w-full gap-3',
   menuItemCaret: 'text-gray-500 dark:text-gray-400',
   menuDropdownItem:
-    'flex-1 block font-light text-gray-500 dark:text-gray-400 rounded-md text-left w-full hover:bg-brand-500/20 p-1 pl-2 transition-all',
+    'flex-1 block font-light rounded-sm text-left w-full hover:bg-brand-500/20 p-1 pl-2 transition-all',
   menuItemActive:
     'bg-brand-500/20 text-brand-500 dark:text-brand-400 dark:bg-brand-500/20',
   menuItemInactive: 'text-gray-500 dark:text-gray-400',

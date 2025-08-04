@@ -1,94 +1,321 @@
-# Complexibily in time and memory
+# Data Structures and Algorithms in TypeScript
 
-# Big Notation
+This guide provides an overview of common data structures and algorithms (DSA) with practical examples in **TypeScript**. It’s designed for developers preparing for interviews or looking to strengthen their understanding of core computer science concepts.
 
-## O(1)
+---
 
-```js
-function returnFirstElement(array[]) {
-    return array[0]
+## 📘 Table of Contents
+
+1. [Arrays](#arrays)
+2. [Linked Lists](#linked-lists)
+3. [Stacks](#stacks)
+4. [Queues](#queues)
+5. [Hash Tables (Maps)](#hash-tables-maps)
+6. [Trees](#trees)
+7. [Graphs](#graphs)
+8. [Sorting Algorithms](#sorting-algorithms)
+9. [Searching Algorithms](#searching-algorithms)
+10. [Recursion](#recursion)
+11. [Big-O Notation](#big-o-notation)
+
+---
+
+## 📦 Arrays
+
+Arrays are linear data structures for storing elements at contiguous memory locations.
+
+```ts
+const nums: number[] = [1, 2, 3, 4, 5];
+
+// Access
+console.log(nums[0]); // 1
+
+// Insertion
+nums.push(6); // [1, 2, 3, 4, 5, 6]
+
+// Deletion
+nums.pop(); // [1, 2, 3, 4, 5]
+```
+
+---
+
+## 🔗 Linked Lists
+
+A linear data structure where elements are stored in nodes and each node points to the next.
+
+```ts
+class Node {
+  value: number;
+  next: Node | null = null;
+
+  constructor(value: number) {
+    this.value = value;
+  }
+}
+
+class LinkedList {
+  head: Node | null = null;
+
+  append(value: number) {
+    const newNode = new Node(value);
+    if (!this.head) {
+      this.head = newNode;
+      return;
+    }
+
+    let current = this.head;
+    while (current.next) {
+      current = current.next;
+    }
+
+    current.next = newNode;
+  }
+
+  print() {
+    let current = this.head;
+    const result: number[] = [];
+    while (current) {
+      result.push(current.value);
+      current = current.next;
+    }
+    console.log(result.join(' -> '));
+  }
+}
+
+// Usage
+const list = new LinkedList();
+list.append(1);
+list.append(2);
+list.print(); // 1 -> 2
+```
+
+---
+
+## 🗂️ Stacks (LIFO)
+
+Last-In-First-Out structure.
+
+```ts
+class Stack<T> {
+  private items: T[] = [];
+
+  push(item: T): void {
+    this.items.push(item);
+  }
+
+  pop(): T | undefined {
+    return this.items.pop();
+  }
+
+  peek(): T | undefined {
+    return this.items[this.items.length - 1];
+  }
+
+  isEmpty(): boolean {
+    return this.items.length === 0;
+  }
+}
+
+// Usage
+const stack = new Stack<number>();
+stack.push(1);
+stack.push(2);
+console.log(stack.pop()); // 2
+```
+
+---
+
+## 📬 Queues (FIFO)
+
+First-In-First-Out structure.
+
+```ts
+class Queue<T> {
+  private items: T[] = [];
+
+  enqueue(item: T): void {
+    this.items.push(item);
+  }
+
+  dequeue(): T | undefined {
+    return this.items.shift();
+  }
+
+  peek(): T | undefined {
+    return this.items[0];
+  }
+}
+
+// Usage
+const queue = new Queue<string>();
+queue.enqueue('A');
+queue.enqueue('B');
+console.log(queue.dequeue()); // A
+```
+
+---
+
+## 🔐 Hash Tables (Maps)
+
+Key-value pairs for fast access.
+
+```ts
+const map = new Map<string, number>();
+map.set('apple', 3);
+map.set('banana', 2);
+
+console.log(map.get('apple')); // 3
+```
+
+---
+
+## 🌲 Trees
+
+Hierarchical data structure where each node has a value and children.
+
+```ts
+class TreeNode {
+  value: number;
+  left: TreeNode | null = null;
+  right: TreeNode | null = null;
+
+  constructor(value: number) {
+    this.value = value;
+  }
+}
+
+// Binary Tree traversal example
+function inOrderTraversal(root: TreeNode | null): void {
+  if (!root) return;
+  inOrderTraversal(root.left);
+  console.log(root.value);
+  inOrderTraversal(root.right);
 }
 ```
 
-It is a constants the input will do always the same number of operations
+---
 
-## O(log n)
+## 🌐 Graphs
 
-`binary search`: in this we need to have a ordered list we always eliminate half of the list comparying with the number we are trying to found.
+Non-linear structure with nodes and edges.
 
-```js
-function binarySearch(arr, target) {
-  let left = 0;
-  let right = arr.length - 1;
+```ts
+class Graph {
+  private adjList = new Map<string, string[]>();
 
-  while (left <= right) {
-    // Calculate the middle index. Using Math.floor to handle odd/even array lengths.
-    const mid = Math.floor((left + right) / 2);
-
-    // Check if the middle element is the target.
-    if (arr[mid] === target) {
-      return mid; // Target found, return its index.
-    }
-    // If the target is greater than the middle element, search the right half.
-    else if (arr[mid] < target) {
-      left = mid + 1;
-    }
-    // If the target is less than the middle element, search the left half.
-    else {
-      right = mid - 1;
+  addVertex(vertex: string) {
+    if (!this.adjList.has(vertex)) {
+      this.adjList.set(vertex, []);
     }
   }
 
-  // If the loop finishes without finding the target, it means the target is not in the array.
-  return -1;
-}
-```
+  addEdge(src: string, dest: string) {
+    this.adjList.get(src)?.push(dest);
+    this.adjList.get(dest)?.push(src); // undirected
+  }
 
-## O(n)
-
-`linear search: `:
-
-```js
-function linearSearch(arr, target) {
-  // Loop through each element of the array
-  for (let i = 0; i < arr.length; i++) {
-    // If the current element matches the target, return its index
-    if (arr[i] === target) {
-      return i;
+  printGraph() {
+    for (let [vertex, edges] of this.adjList.entries()) {
+      console.log(`${vertex} -> ${edges.join(', ')}`);
     }
   }
-  // If the target is not found after checking all elements, return -1
-  return -1;
 }
 ```
 
-## o(n2) complexity quarratica
+---
 
-`bubbleSort`is a good example
+## 📊 Sorting Algorithms
 
-```js
-function bubbleSort(arr) {
-  const n = arr.length;
-  let swapped;
+### Bubble Sort
 
-  for (let i = 0; i < n - 1; i++) {
-    swapped = false; // Flag to check if any swaps occurred in this pass
-
-    // Inner loop for comparisons and swaps
-    // The last 'i' elements are already in place after 'i' passes
-    for (let j = 0; j < n - i - 1; j++) {
+```ts
+function bubbleSort(arr: number[]): number[] {
+  let n = arr.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n - 1 - i; j++) {
       if (arr[j] > arr[j + 1]) {
-        // Swap elements using array destructuring (ES6)
         [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-        swapped = true; // Set flag to true if a swap occurred
       }
-    }
-
-    // If no two elements were swapped in the inner loop, the array is sorted
-    if (!swapped) {
-      break;
     }
   }
   return arr;
 }
 ```
+
+### Quick Sort
+
+```ts
+function quickSort(arr: number[]): number[] {
+  if (arr.length <= 1) return arr;
+  const pivot = arr[0];
+  const left = arr.slice(1).filter((v) => v <= pivot);
+  const right = arr.slice(1).filter((v) => v > pivot);
+  return [...quickSort(left), pivot, ...quickSort(right)];
+}
+```
+
+---
+
+## 🔍 Searching Algorithms
+
+### Linear Search
+
+```ts
+function linearSearch(arr: number[], target: number): number {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) return i;
+  }
+  return -1;
+}
+```
+
+### Binary Search
+
+```ts
+function binarySearch(arr: number[], target: number): number {
+  let low = 0;
+  let high = arr.length - 1;
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    if (arr[mid] === target) return mid;
+    if (arr[mid] < target) low = mid + 1;
+    else high = mid - 1;
+  }
+  return -1;
+}
+```
+
+---
+
+## 🔁 Recursion
+
+A function that calls itself.
+
+```ts
+function factorial(n: number): number {
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
+}
+```
+
+---
+
+## 🧠 Big-O Notation
+
+| Complexity | Example               | Notes              |
+| ---------- | --------------------- | ------------------ |
+| O(1)       | Accessing array index | Constant time      |
+| O(n)       | Linear Search         | Scales with input  |
+| O(n²)      | Bubble Sort           | Nested loops       |
+| O(log n)   | Binary Search         | Divide and conquer |
+| O(n log n) | Merge/Quick Sort      | Optimal sorting    |
+
+---
+
+## ✅ Summary
+
+Learning DSA is critical for building efficient software and succeeding in technical interviews. This guide provides a solid foundation in TypeScript to explore data structures and algorithms in a type-safe and modern JavaScript environment.
+
+---
+
+Happy coding! 🚀

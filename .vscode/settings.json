@@ -1,5 +1,8 @@
 {
     //saving this file will trigger a reformat of the code
     "editor.formatOnSave": true,
-    "nxConsole.generateAiAgentRules": true,
+    "task.autoDetect": "off",
+    "npm.autoDetect": "off",
+    "typescript.tsc.autoDetect": "off",
+    "nxConsole.generateAiAgentRules": true
 }

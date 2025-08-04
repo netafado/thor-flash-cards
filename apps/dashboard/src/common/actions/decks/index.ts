@@ -27,28 +27,7 @@ export async function createDeck(_prevState: Deck | null, queryData: FormData) {
   return response;
 }
 
-export async function getDecks() {
-  'use server';
-  const response = await authFetch<Deck[]>('/decks', {
-    cache: 'no-store',
-    method: 'GET',
-  });
-
-  return response;
-}
-
-export async function getDeckById(deckId: string) {
-  'use server';
-
-  const response = await authFetch<Deck>(`/decks/${deckId}`, {
-    method: 'GET',
-    cache: 'default',
-  });
-
-  return response;
-}
-
-export async function createCard(queryData: FormData) {
+export async function createCard(_prevState: Card | null, queryData: FormData) {
   'use server';
   const front = queryData.get('front');
   const back = queryData.get('back');
@@ -70,6 +49,27 @@ export async function createCard(queryData: FormData) {
   const response = await authFetch<Card>(`/cards`, {
     method: 'POST',
     body: JSON.stringify(card),
+  });
+
+  return response;
+}
+
+export async function getDecks() {
+  'use server';
+  const response = await authFetch<Deck[]>('/decks', {
+    cache: 'default',
+    method: 'GET',
+  });
+
+  return response;
+}
+
+export async function getDeckById(deckId: string) {
+  'use server';
+
+  const response = await authFetch<Deck>(`/decks/${deckId}`, {
+    method: 'GET',
+    cache: 'default',
   });
 
   return response;

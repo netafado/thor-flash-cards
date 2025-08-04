@@ -23,15 +23,13 @@ export class CardService {
     card: CreateCardDtoDataBase
   ): Promise<CreateCardResponseDto> {
     try {
+      console.log('Creating card with data:', card);
       const cardResult = await this.dataBase.models.Card.create(card);
       return cardResult.toJSON() as CreateCardResponseDto;
     } catch (error) {
       console.error('Error creating card:', error);
-      throw new Error('Failed to create tag');
+      throw new Error('Failed to create card');
     }
   }
 
-  deleteTag(tagId: number) {
-    return `Tag with ID ${tagId} deleted successfully`;
-  }
 }
