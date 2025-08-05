@@ -1,6 +1,7 @@
 'use client';
 
 import { DashboardLayout, SidebarProvider } from '@lib/ui';
+import { CardsProvider } from '@dash/providers/cards';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import Auth from '@dash/common/hoc/auth';
@@ -30,7 +31,9 @@ export default function DashboardProviders({
     <SessionProvider session={session} refetchInterval={5 * 60}>
       <SidebarProvider>
         <Auth>
-          <DashContent>{children}</DashContent>
+          <CardsProvider>
+            <DashContent>{children}</DashContent>
+          </CardsProvider>
         </Auth>
       </SidebarProvider>
     </SessionProvider>

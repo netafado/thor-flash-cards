@@ -3,4 +3,5 @@
 @tailwind utilities;
 
 @custom-variant dark (&:where(.dark, .dark *));
+@plugin 'tailwind-scrollbar';
 
