@@ -12,10 +12,17 @@ import {
 import { FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
 import { useCards } from '@dash/providers/cards';
 
 const CardLearning = () => {
   const { currentCard, nextCard, previousCard, indexCard } = useCards();
+  const [showAnswer, setShowAnswer] = useState(false);
+
+  useEffect(() => {
+    setShowAnswer(false);
+  }, [currentCard]);
+
   if (!currentCard) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -25,6 +32,11 @@ const CardLearning = () => {
       </div>
     );
   }
+
+  const toggleAnswer = () => {
+    setShowAnswer(!showAnswer);
+  };
+
   return (
     <>
       <div className="sticky top-0 z-20 flex justify-between items-center bg-white dark:bg-gray-900 p-2 rounded-sm">
@@ -49,23 +61,27 @@ const CardLearning = () => {
         </div>
       </div>
 
-      <div className="relative max-h-dvh">
-        <>
-          <div className="items-center gap-2 justify-center h-full w-full">
-            <div className="text-center">
-              <Typography.Paragraph className="font-sm">
-                How dificult is this question for you
-              </Typography.Paragraph>
-              <Button>Easy</Button>
-              <Button className="bg-error">More or less</Button>
-              <Button className="bg-error">Hard</Button>
-            </div>
+      <div
+        className={clsx('relative flex', {
+          'max-h-dvh overflow-auto': showAnswer,
+        })}
+      >
+        {!showAnswer && (
+          <div className="mt-4 flex justify-center items-center absolute top-0 left-0 right-0 bottom-0 z-10">
+            <Button>Easy</Button>
+            <Button className="bg-error">More or less</Button>
+            <Button className="bg-error" onClick={toggleAnswer}>
+              Hard
+            </Button>
           </div>
-          <div className="absolute h-full w-full top-0 right-0 flex gap-2 dark:bg-gray-900/50 p-2 rounded-sm z-10 bg-white dark:bg-gray-900"></div>
-          <div className="flex items-center justify-between">
-            <EditorView markdown={currentCard?.back || ''} />
-          </div>
-        </>
+        )}
+        <div
+          className={clsx('w-full p-4 overflow-auto flex-1 h-full', {
+            'blur-sm max-h-sm overflow-hidden': !showAnswer,
+          })}
+        >
+          <EditorView markdown={currentCard?.back || ''} />
+        </div>
       </div>
     </>
   );
@@ -109,7 +125,7 @@ const ModalCard: FC = () => {
   return (
     <Modal
       {...{ toggleModal, open }}
-      modalSize="fullScreen"
+      modalSize="sm"
       title={
         isPending ? (
           <div className="animate-pulse h-1 w-[20px] rounded bg-gray-400 mb-2"></div>

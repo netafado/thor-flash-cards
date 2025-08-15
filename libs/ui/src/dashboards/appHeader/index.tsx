@@ -1,8 +1,7 @@
 'use client';
 import { useState, useRef, FC } from 'react';
 import type { SidebarContextType } from '../../providers/types';
-import { SunIcon, MoonIcon, PersonIcon } from '@radix-ui/react-icons';
-import { DropdownMenu } from 'radix-ui';
+import { SunIcon, MoonIcon } from '@radix-ui/react-icons';
 
 type AppHeaderProps = Pick<
   SidebarContextType,
@@ -34,7 +33,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <header className="sticky top-0 flex w-full bg-white border-gray-200 z-99999 dark:border-gray-800 dark:bg-gray-900 lg:border-b">
+    <header className="sticky top-0 flex w-full bg-white border-gray-200 z-99999 dark:border-gray-800 dark:bg-gray-900 lg:border-b z-40">
       <div className="flex flex-col items-center justify-left grow lg:flex-row lg:px-3">
         <div className="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-gray-200 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:py-4">
           <button
@@ -144,7 +143,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
               <SunIcon className="hidden dark:block" width={15} height={15} />
               <MoonIcon className="dark:hidden" width={15} height={15} />
             </button>
-            <DropdownMenu.Root>
+            {/* <DropdownMenu.Root>
               <DropdownMenu.Trigger
                 className="inline-flex size-[35px] items-center justify-center rounded-full bg-white text-violet11 shadow-[0_2px_10px] shadow-blackA4 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-black"
                 aria-label="Customise options"
@@ -172,7 +171,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
                   ))}
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
-            </DropdownMenu.Root>
+            </DropdownMenu.Root> */}
           </div>
         </div>
       </div>

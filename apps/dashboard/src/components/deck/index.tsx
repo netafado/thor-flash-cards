@@ -11,12 +11,12 @@ import {
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
-const DeckCard: FC<Deck> = ({ id, title, cards }) => {
+const DeckCard: FC<Deck> = ({ id, title }) => {
   const route = useRouter();
-  console.log('DeckCard', { id, title, cards });
+
   return (
     <div className="relative">
-      <Card onClick={() => route.push(`/decks?deckId=${id}`)}>
+      <Card>
         <div className="relative w-full h-full flex flex-col justify-between">
           <div className="header flex items-center justify-between">
             <Typography.H4 className="text-brand">{title}</Typography.H4>
@@ -32,7 +32,7 @@ const DeckCard: FC<Deck> = ({ id, title, cards }) => {
               actions={[
                 {
                   label: 'Edit',
-                  onClick: () => route.push(`/decks?deckId=${id}`),
+                  onClick: () => route.push(`/decks/${id}`),
                 },
                 {
                   label: 'Delete',
@@ -55,6 +55,7 @@ const DeckCard: FC<Deck> = ({ id, title, cards }) => {
           <div>
             <Button
               size="sm"
+              onClick={() => route.push(`/decks/?deckId=${id}`)}
               className="rounded-full px-2 mt-2 hover:text-dark-500 h-9 w-9 bg-success-500/30 border border-success-500/60 text-success-500"
             >
               <PlayIcon width={20} height={20} className="text-success-500" />
