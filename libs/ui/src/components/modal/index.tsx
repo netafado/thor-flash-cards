@@ -59,9 +59,7 @@ const Modal: FC<DialogDemoProps> = ({
             {description}
           </Dialog.Description>
         )}
-        <div className="mb-4 text-gray-500 dark:text-gray-500 overflow-auto flex-1 h-full scrollbar scrollbar-thumb-sky-700 scrollbar-track-brand-300 h-32">
-          {children}
-        </div>
+        <div className="mb-4 text-gray-500 dark:text-gray-500">{children}</div>
 
         <Dialog.Close
           asChild
